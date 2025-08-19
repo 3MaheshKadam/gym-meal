@@ -1,0 +1,35 @@
+|-- .expo
+    |-- devices.json
+    |-- README.md
+|-- .gitignore
+|-- app.json
+|-- App.jsx
+|-- assets
+    |-- adaptive-icon.png
+    |-- favicon.png
+    |-- icon.png
+    |-- splash.png
+|-- babel.config.js
+|-- cesconfig.jsonc
+|-- eslint.config.js
+|-- global.css
+|-- metro.config.js
+|-- package-lock.json
+|-- package.json
+|-- prettier.config.js
+|-- src
+    |-- navigation
+        |-- RootNavigator.jsx
+        |-- TabNavigator.jsx
+    |-- screens
+        |-- HomeScreen.jsx
+        |-- MealsScreen.jsx
+        |-- OTPScreen.jsx
+        |-- ProductsScreen.jsx
+        |-- ProfileScreen.jsx
+        |-- ProgressScreen.jsx
+        |-- SignInScreen.jsx
+        |-- SignUpScreen.jsx
+    |-- utils
+        |-- validators.js
+|-- tailwind.config.js
