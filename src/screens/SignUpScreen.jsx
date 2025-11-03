@@ -1,54 +1,100 @@
-
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, ScrollView, TextInput, StatusBar, Dimensions, KeyboardAvoidingView, Platform } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient'; // You'll need to install this
-import Svg, { Path, Circle, G, Rect } from 'react-native-svg'; // You'll need to install react-native-svg
+import { LinearGradient } from 'expo-linear-gradient';
+import Svg, { Path, Circle } from 'react-native-svg';
 
 const { width, height } = Dimensions.get('window');
 
-// Custom Fitness Icon Component
-const FitnessIcon = ({ size = 60, color = "#16a085" }) => (
+// Enhanced Dumbbell Icon
+const DumbbellIcon = ({ size = 40, color = "#ffffff" }) => (
   <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
     <Path
       d="M20.57 14.86L22 13.43 20.57 12 17 15.57 8.43 7 12 3.43 10.57 2 9.14 3.43 7.71 2 5.57 4.14 4.14 2.71 2.71 4.14l1.43 1.43L2 7.71l1.43 1.43L2 10.57 3.43 12 7 8.43 15.57 17 12 20.57 13.43 22l1.43-1.43L16.29 22l2.14-2.14 1.43 1.43 1.43-1.43-1.43-1.43L22 16.29l-1.43-1.43z"
       fill={color}
     />
+    <Circle cx="6" cy="12" r="2.5" fill={color}/>
+    <Circle cx="18" cy="12" r="2.5" fill={color}/>
   </Svg>
 );
 
-// Meal/Nutrition Icon Component
-const NutritionIcon = ({ size = 40, color = "#ffffff" }) => (
+// Fire Icon
+const FireIcon = ({ size = 30, color = "#ff6b35" }) => (
   <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
     <Path
-      d="M12 2L13.09 8.26L15 7L14.5 9.5L17 9L16.5 11.5L19 11L18.5 13.5L21 13L20.5 15.5L22 15L21.5 17L19 17.5L16.5 18L14 18.5L11.5 19L9 19.5L6.5 20L4 20.5L2 21V19L4 18.5L6.5 18L9 17.5L11.5 17L14 16.5L16.5 16L19 15.5L21.5 15L22 13L19 13.5L16.5 14L14 14.5L11.5 15L9 15.5L6.5 16L4 16.5L2 17V15L4 14.5L6.5 14L9 13.5L11.5 13L12 2Z"
-      fill={color}
-    />
-    <Circle cx="8" cy="8" r="2" fill={color}/>
-    <Circle cx="16" cy="8" r="2" fill={color}/>
-    <Path d="M12 14c2 0 4-1 4-3H8c0 2 2 3 4 3z" fill={color}/>
-  </Svg>
-);
-
-// Heart Rate Icon
-const HeartIcon = ({ size = 30, color = "#e74c3c" }) => (
-  <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-    <Path
-      d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+      d="M13.5.67s.74 2.65.74 4.8c0 2.06-1.35 3.73-3.41 3.73-2.07 0-3.63-1.67-3.63-3.73l.03-.36C5.21 7.51 4 10.62 4 14c0 4.42 3.58 8 8 8s8-3.58 8-8C20 8.61 17.41 3.8 13.5.67zM11.71 19c-1.78 0-3.22-1.4-3.22-3.14 0-1.62 1.05-2.76 2.81-3.12 1.77-.36 3.6-1.21 4.62-2.58.39 1.29.59 2.65.59 4.04 0 2.65-2.15 4.8-4.8 4.8z"
       fill={color}
     />
   </Svg>
 );
 
-// Progress Icon
-const ProgressIcon = ({ size = 30, color = "#ffffff" }) => (
+// Lightning Icon
+const LightningIcon = ({ size = 30, color = "#ffd93d" }) => (
   <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-    <Circle cx="12" cy="12" r="10" stroke={color} strokeWidth="2" fill="none"/>
-    <Path d="M12 6v6l4 2" stroke={color} strokeWidth="2" strokeLinecap="round"/>
+    <Path d="M7 2v11h3v9l7-12h-4l4-8z" fill={color} />
   </Svg>
 );
 
-// User Plus Icon for Sign Up
-const UserPlusIcon = ({ size = 60, color = "#16a085" }) => (
+// User Icon
+const UserIcon = ({ size = 24, color = "#6b7280" }) => (
+  <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+    <Path
+      d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"
+      stroke={color}
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <Circle
+      cx="12"
+      cy="7"
+      r="4"
+      stroke={color}
+      strokeWidth="2"
+      fill="none"
+    />
+  </Svg>
+);
+
+// Email Icon
+const EmailIcon = ({ size = 24, color = "#6b7280" }) => (
+  <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+    <Path
+      d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"
+      fill={color}
+    />
+  </Svg>
+);
+
+// Phone Icon
+const PhoneIcon = ({ size = 24, color = "#6b7280" }) => (
+  <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+    <Path
+      d="M17 2H7c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 18H7V4h10v16z"
+      fill={color}
+    />
+  </Svg>
+);
+
+// Eye Icon
+const EyeIcon = ({ size = 24, color = "#6b7280", crossed = false }) => (
+  <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+    <Path
+      d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"
+      fill={color}
+    />
+    {crossed && (
+      <Path
+        d="M2 2L22 22"
+        stroke={color}
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+    )}
+  </Svg>
+);
+
+// User Plus Icon (for logo)
+const UserPlusIcon = ({ size = 60, color = "#ffffff" }) => (
   <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
     <Path
       d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"
@@ -93,98 +139,116 @@ export default function SignUpScreen({ navigation }) {
 
   return (
     <>
-      <StatusBar barStyle="light-content" backgroundColor="#16a085" />
+      <StatusBar barStyle="light-content" backgroundColor="#0a0e27" />
       <LinearGradient
-        colors={['#16a085', '#2ecc71', '#27ae60']}
-        locations={[0, 0.6, 1]}
+        colors={['#0a0e27', '#1a1f3a', '#2d1b4e']}
+        locations={[0, 0.5, 1]}
         style={{ flex: 1 }}
       >
         <KeyboardAvoidingView
           style={{ flex: 1 }}
           behavior={Platform.OS === 'ios' ? 'padding' : null}
-          keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20} // Adjust offset if needed for headers or safe areas
+          keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}
         >
           <ScrollView
             className="flex-1"
             showsVerticalScrollIndicator={false}
-            contentContainerStyle={{ flexGrow: 1 }} // Ensures scrolling works properly
+            contentContainerStyle={{ flexGrow: 1 }}
           >
-            {/* Header Section with Background Pattern */}
-            <View className="relative pt-12 pb-6 px-6">
-              {/* Decorative Elements */}
-              <View className="absolute top-8 right-6 opacity-20">
-                <NutritionIcon size={70} color="#ffffff" />
+            {/* Hero Section with Floating Elements */}
+            <View className="relative pt-10 pb-4">
+              {/* Animated background elements */}
+              <View className="absolute top-6 right-6 opacity-10">
+                <FireIcon size={100} color="#ff6b35" />
               </View>
-              <View className="absolute top-16 left-4 opacity-10">
-                <HeartIcon size={50} color="#ffffff" />
+              <View className="absolute top-20 left-8 opacity-10">
+                <LightningIcon size={70} color="#ffd93d" />
               </View>
-              <View className="absolute top-28 right-16 opacity-15">
-                <ProgressIcon size={45} color="#ffffff" />
-              </View>
-              <View className="absolute top-6 left-12 opacity-10">
-                <FitnessIcon size={40} color="#ffffff" />
+              <View className="absolute top-32 right-16 opacity-10">
+                <DumbbellIcon size={60} color="#00d4ff" />
               </View>
 
-              {/* Main Logo */}
-              <View className="items-center mt-6">
-                <View className="w-24 h-24 bg-white/90 rounded-full flex items-center justify-center mb-4 shadow-2xl">
-                  <UserPlusIcon size={50} color="#16a085" />
+              {/* Logo and Branding */}
+              <View className="items-center mt-4 px-6">
+                <View className="relative mb-4">
+                  <View className="w-20 h-20 bg-gradient-to-br from-orange-500 to-pink-600 rounded-2xl flex items-center justify-center shadow-2xl transform rotate-12">
+                    <View className="transform -rotate-12">
+                      <UserPlusIcon size={40} color="#ffffff" />
+                    </View>
+                  </View>
+                  <View className="absolute -top-2 -right-2 w-7 h-7 bg-yellow-400 rounded-full flex items-center justify-center">
+                    <FireIcon size={16} color="#ffffff" />
+                  </View>
                 </View>
-                <Text className="text-3xl font-bold text-white mb-1 text-center">
-                  Join FitLife
+
+                <Text className="text-4xl font-black text-white mb-2 tracking-tight">
+                  JOIN FITLIFE
                 </Text>
-                <Text className="text-white/80 text-base text-center mb-2">
-                  Start Your Transformation Today
-                </Text>
-                {/* Progress Bar */}
-                <View className="w-20 h-1 bg-white/30 rounded-full overflow-hidden">
-                  <View className="w-full h-full bg-white rounded-full" />
+                <View className="flex-row items-center space-x-2">
+                  <View className="w-10 h-1 bg-orange-500 rounded-full" />
+                  <LightningIcon size={14} color="#ffd93d" />
+                  <View className="w-10 h-1 bg-orange-500 rounded-full" />
                 </View>
+                <Text className="text-gray-400 text-sm mt-2 font-medium tracking-wide">
+                  START YOUR TRANSFORMATION
+                </Text>
               </View>
             </View>
 
-            {/* Form Section */}
-            <View className="flex-1 px-6 -mt-2">
-              <View className="bg-white rounded-3xl shadow-2xl p-6 mb-6">
-                <Text className="text-2xl font-bold text-gray-800 text-center mb-6">
-                  Create Account
-                </Text>
+            {/* Main Form Card */}
+            <View className="px-5 mt-2">
+              <View className="bg-white/10 backdrop-blur-xl rounded-3xl p-5 border border-white/20 shadow-2xl">
+                {/* Welcome Message */}
+                <View className="mb-5">
+                  <Text className="text-2xl font-black text-white mb-1">
+                    Create Account
+                  </Text>
+                  <Text className="text-gray-400 text-sm">
+                    Let&apos;s get you started! 🚀
+                  </Text>
+                </View>
 
                 {error ? (
-                  <View className="bg-red-50 border border-red-200 rounded-xl p-3 mb-4">
-                    <Text className="text-red-600 text-center font-medium">{error}</Text>
+                  <View className="bg-red-500/20 border-2 border-red-500 rounded-2xl p-3 mb-4 flex-row items-center">
+                    <Text className="text-red-300 font-bold flex-1">⚠️ {error}</Text>
                   </View>
                 ) : null}
 
                 {/* Full Name Input */}
-                <View className="mb-4">
-                  <Text className="text-gray-700 font-semibold mb-2 ml-1">
-                    Full Name
+                <View className="mb-3">
+                  <Text className="text-white font-bold mb-2 ml-1 text-xs tracking-wide">
+                    FULL NAME
                   </Text>
-                  <View className="relative">
+                  <View className="relative bg-white/5 border-2 border-white/10 rounded-2xl overflow-hidden">
+                    <View className="absolute left-4 top-0 bottom-0 justify-center z-10">
+                      <UserIcon size={20} color="#9ca3af" />
+                    </View>
                     <TextInput
-                      className="border-2 border-gray-200 p-4 rounded-xl bg-gray-50 text-gray-800 focus:border-green-500 focus:bg-white"
+                      className="pl-12 pr-4 py-4 text-white text-base"
                       value={name}
                       onChangeText={setName}
-                      placeholder="Enter your full name"
-                      placeholderTextColor="#9CA3AF"
+                      placeholder="John Doe"
+                      placeholderTextColor="#6b7280"
                       autoCapitalize="words"
                     />
                   </View>
                 </View>
 
                 {/* Email Input */}
-                <View className="mb-4">
-                  <Text className="text-gray-700 font-semibold mb-2 ml-1">
-                    Email Address
+                <View className="mb-3">
+                  <Text className="text-white font-bold mb-2 ml-1 text-xs tracking-wide">
+                    EMAIL
                   </Text>
-                  <View className="relative">
+                  <View className="relative bg-white/5 border-2 border-white/10 rounded-2xl overflow-hidden">
+                    <View className="absolute left-4 top-0 bottom-0 justify-center z-10">
+                      <EmailIcon size={20} color="#9ca3af" />
+                    </View>
                     <TextInput
-                      className="border-2 border-gray-200 p-4 rounded-xl bg-gray-50 text-gray-800 focus:border-green-500 focus:bg-white"
+                      className="pl-12 pr-4 py-4 text-white text-base"
                       value={email}
                       onChangeText={setEmail}
-                      placeholder="Enter your email"
-                      placeholderTextColor="#9CA3AF"
+                      placeholder="your.email@example.com"
+                      placeholderTextColor="#6b7280"
                       keyboardType="email-address"
                       autoCapitalize="none"
                     />
@@ -192,101 +256,133 @@ export default function SignUpScreen({ navigation }) {
                 </View>
 
                 {/* Phone Input */}
-                <View className="mb-4">
-                  <Text className="text-gray-700 font-semibold mb-2 ml-1">
-                    Phone Number
+                <View className="mb-3">
+                  <Text className="text-white font-bold mb-2 ml-1 text-xs tracking-wide">
+                    PHONE NUMBER
                   </Text>
-                  <View className="relative">
+                  <View className="relative bg-white/5 border-2 border-white/10 rounded-2xl overflow-hidden">
+                    <View className="absolute left-4 top-0 bottom-0 justify-center z-10">
+                      <PhoneIcon size={20} color="#9ca3af" />
+                    </View>
                     <TextInput
-                      className="border-2 border-gray-200 p-4 rounded-xl bg-gray-50 text-gray-800 focus:border-green-500 focus:bg-white"
+                      className="pl-12 pr-4 py-4 text-white text-base"
                       value={phone}
                       onChangeText={setPhone}
-                      placeholder="Enter your phone number"
-                      placeholderTextColor="#9CA3AF"
+                      placeholder="+1 (555) 000-0000"
+                      placeholderTextColor="#6b7280"
                       keyboardType="phone-pad"
                     />
                   </View>
                 </View>
 
                 {/* Password Input */}
-                <View className="mb-6">
-                  <Text className="text-gray-700 font-semibold mb-2 ml-1">
-                    Password
+                <View className="mb-4">
+                  <Text className="text-white font-bold mb-2 ml-1 text-xs tracking-wide">
+                    PASSWORD
                   </Text>
-                  <View className="relative">
+                  <View className="relative bg-white/5 border-2 border-white/10 rounded-2xl overflow-hidden">
                     <TextInput
-                      className="border-2 border-gray-200 p-4 rounded-xl bg-gray-50 text-gray-800 focus:border-green-500 focus:bg-white"
+                      className="pl-4 pr-14 py-4 text-white text-base"
                       value={password}
                       onChangeText={setPassword}
-                      placeholder="Create a strong password"
-                      placeholderTextColor="#9CA3AF"
+                      placeholder="Create strong password"
+                      placeholderTextColor="#6b7280"
                       secureTextEntry={!isPasswordVisible}
                     />
+                    <TouchableOpacity
+                      onPress={() => setIsPasswordVisible(!isPasswordVisible)}
+                      className="absolute right-4 top-0 bottom-0 justify-center"
+                    >
+                      <EyeIcon size={22} color="#9ca3af" crossed={!isPasswordVisible} />
+                    </TouchableOpacity>
                   </View>
                 </View>
 
                 {/* Terms and Conditions */}
-                <View className="mb-6">
-                  <Text className="text-xs text-gray-500 text-center leading-4">
+                <View className="mb-5">
+                  <Text className="text-xs text-gray-400 text-center leading-4">
                     By signing up, you agree to our{' '}
-                    <Text className="text-green-600 font-medium">Terms of Service</Text>
+                    <Text className="text-orange-400 font-semibold">Terms</Text>
                     {' '}and{' '}
-                    <Text className="text-green-600 font-medium">Privacy Policy</Text>
+                    <Text className="text-orange-400 font-semibold">Privacy Policy</Text>
                   </Text>
                 </View>
 
-                {/* Sign Up Button */}
+                {/* Sign Up Button with Gradient */}
                 <TouchableOpacity
                   onPress={handleSignUp}
                   activeOpacity={0.8}
-                  className="bg-green-600 p-4 rounded-xl items-center mb-4 shadow-lg active:scale-95"
+                  className="mb-4 overflow-hidden rounded-2xl shadow-xl"
                 >
-                  <Text className="text-white font-bold text-lg">
-                    Create Account
-                  </Text>
+                  <LinearGradient
+                    colors={['#ff6b35', '#f7931e']}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 0 }}
+                    className="py-5 items-center"
+                  >
+                    <Text className="text-white font-black text-lg tracking-wide">
+                      CREATE ACCOUNT →
+                    </Text>
+                  </LinearGradient>
                 </TouchableOpacity>
 
                 {/* Divider */}
                 <View className="flex-row items-center mb-4">
-                  <View className="flex-1 h-px bg-gray-200" />
-                  <Text className="mx-4 text-gray-500 font-medium">OR</Text>
-                  <View className="flex-1 h-px bg-gray-200" />
+                  <View className="flex-1 h-px bg-white/20" />
+                  <Text className="mx-4 text-gray-400 font-bold text-xs">OR</Text>
+                  <View className="flex-1 h-px bg-white/20" />
                 </View>
 
-                {/* Sign In Link */}
-                <TouchableOpacity 
+                {/* Sign In Button */}
+                <TouchableOpacity
                   onPress={() => navigation.navigate('SignIn')}
-                  className="border-2 border-green-500 p-4 rounded-xl items-center"
+                  className="border-2 border-orange-500 rounded-2xl py-4 items-center bg-orange-500/10"
                 >
-                  <Text className="text-green-600 font-bold text-lg">
-                    Already Have Account? Sign In
+                  <Text className="text-orange-400 font-black text-base tracking-wide">
+                    ALREADY HAVE ACCOUNT?
                   </Text>
                 </TouchableOpacity>
               </View>
 
-              {/* Footer Features */}
-              <View className="flex-row justify-center items-center space-x-8 mb-8">
-                <View className="items-center">
-                  <NutritionIcon size={28} color="#ffffff" />
-                  <Text className="text-white/80 text-xs mt-1">Meal Plans</Text>
-                </View>
-                <View className="items-center">
-                  <HeartIcon size={28} color="#ffffff" />
-                  <Text className="text-white/80 text-xs mt-1">Health Track</Text>
-                </View>
-                <View className="items-center">
-                  <ProgressIcon size={28} color="#ffffff" />
-                  <Text className="text-white/80 text-xs mt-1">Progress</Text>
+              {/* Benefits Section */}
+              <View className="mt-6 mb-6">
+                <Text className="text-white font-black text-center text-lg mb-4 tracking-wide">
+                  WHAT YOU GET
+                </Text>
+                <View className="flex-row justify-between px-2">
+                  <View className="items-center flex-1">
+                    <View className="w-14 h-14 bg-gradient-to-br from-orange-500 to-red-600 rounded-2xl flex items-center justify-center mb-2 shadow-lg">
+                      <DumbbellIcon size={28} color="#ffffff" />
+                    </View>
+                    <Text className="text-white font-bold text-xs">WORKOUTS</Text>
+                    <Text className="text-gray-500 text-xs">500+ Plans</Text>
+                  </View>
+                  
+                  <View className="items-center flex-1">
+                    <View className="w-14 h-14 bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl flex items-center justify-center mb-2 shadow-lg">
+                      <FireIcon size={28} color="#ffffff" />
+                    </View>
+                    <Text className="text-white font-bold text-xs">NUTRITION</Text>
+                    <Text className="text-gray-500 text-xs">1000+ Meals</Text>
+                  </View>
+                  
+                  <View className="items-center flex-1">
+                    <View className="w-14 h-14 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center mb-2 shadow-lg">
+                      <LightningIcon size={28} color="#ffffff" />
+                    </View>
+                    <Text className="text-white font-bold text-xs">TRACKING</Text>
+                    <Text className="text-gray-500 text-xs">AI Powered</Text>
+                  </View>
                 </View>
               </View>
 
-              {/* Welcome Message */}
-              <View className="bg-white/10 rounded-2xl p-4 mb-6">
-                <Text className="text-white text-center text-sm">
-                  🎉 <Text className="font-semibold">Welcome to the FitLife Community!</Text>
+              {/* Community Message */}
+              <View className="bg-gradient-to-r from-orange-500/20 to-pink-600/20 border-2 border-orange-500/30 rounded-2xl p-4 mb-6">
+                <Text className="text-white text-center font-bold text-sm">
+                  🎉 Join 50K+ Fitness Enthusiasts
                 </Text>
-                <Text className="text-white/80 text-center text-xs mt-1">
-                  Join thousands on their fitness journey
+                <Text className="text-gray-400 text-center text-xs mt-1">
+                  Start your transformation journey today!
                 </Text>
               </View>
             </View>

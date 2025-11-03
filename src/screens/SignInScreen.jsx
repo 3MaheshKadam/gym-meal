@@ -1,38 +1,62 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, ScrollView, TextInput, StatusBar, Dimensions } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient'; // You'll need to install this
-import Svg, { Path, Circle, G } from 'react-native-svg'; // You'll need to install react-native-svg
+import { LinearGradient } from 'expo-linear-gradient';
+import Svg, { Path, Circle, Defs, RadialGradient, Stop } from 'react-native-svg';
 
 const { width, height } = Dimensions.get('window');
 
-// Custom Fitness Icon Component
-const FitnessIcon = ({ size = 60, color = "#16a085" }) => (
-  <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-    <Path
-      d="M20.57 14.86L22 13.43 20.57 12 17 15.57 8.43 7 12 3.43 10.57 2 9.14 3.43 7.71 2 5.57 4.14 4.14 2.71 2.71 4.14l1.43 1.43L2 7.71l1.43 1.43L2 10.57 3.43 12 7 8.43 15.57 17 12 20.57 13.43 22l1.43-1.43L16.29 22l2.14-2.14 1.43 1.43 1.43-1.43-1.43-1.43L22 16.29l-1.43-1.43z"
-      fill={color}
-    />
-  </Svg>
-);
-
-// Dumbbell Icon Component
+// Enhanced Dumbbell Icon with more detail
 const DumbbellIcon = ({ size = 40, color = "#ffffff" }) => (
   <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
     <Path
       d="M20.57 14.86L22 13.43 20.57 12 17 15.57 8.43 7 12 3.43 10.57 2 9.14 3.43 7.71 2 5.57 4.14 4.14 2.71 2.71 4.14l1.43 1.43L2 7.71l1.43 1.43L2 10.57 3.43 12 7 8.43 15.57 17 12 20.57 13.43 22l1.43-1.43L16.29 22l2.14-2.14 1.43 1.43 1.43-1.43-1.43-1.43L22 16.29l-1.43-1.43z"
       fill={color}
     />
-    <Circle cx="6" cy="12" r="2" fill={color}/>
-    <Circle cx="18" cy="12" r="2" fill={color}/>
-    <Path d="M8 12h8" stroke={color} strokeWidth="2" strokeLinecap="round"/>
+    <Circle cx="6" cy="12" r="2.5" fill={color}/>
+    <Circle cx="18" cy="12" r="2.5" fill={color}/>
   </Svg>
 );
 
-// Apple Icon for Diet
-const AppleIcon = ({ size = 30, color = "#e74c3c" }) => (
+// Fire Icon for motivation
+const FireIcon = ({ size = 30, color = "#ff6b35" }) => (
   <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
     <Path
-      d="M12 2C13.1 2 14 2.9 14 4C14 5.1 13.1 6 12 6C10.9 6 10 5.1 10 4C10 2.9 10.9 2 12 2ZM21 9V7L15 13L13.5 7C14.1 6.2 15 5.7 16 5.7C17.9 5.7 19.4 7.2 19.4 9H21ZM9 9C9 7.2 10.6 5.7 12.5 5.7C13.5 5.7 14.4 6.2 15 7L13.5 13L7.5 7C8.1 6.2 9 5.7 10 5.7H9ZM12 8C10.3 8 9 9.8 9 12V22H15V12C15 9.8 13.7 8 12 8Z"
+      d="M13.5.67s.74 2.65.74 4.8c0 2.06-1.35 3.73-3.41 3.73-2.07 0-3.63-1.67-3.63-3.73l.03-.36C5.21 7.51 4 10.62 4 14c0 4.42 3.58 8 8 8s8-3.58 8-8C20 8.61 17.41 3.8 13.5.67zM11.71 19c-1.78 0-3.22-1.4-3.22-3.14 0-1.62 1.05-2.76 2.81-3.12 1.77-.36 3.6-1.21 4.62-2.58.39 1.29.59 2.65.59 4.04 0 2.65-2.15 4.8-4.8 4.8z"
+      fill={color}
+    />
+  </Svg>
+);
+
+// Lightning Icon for energy
+const LightningIcon = ({ size = 30, color = "#ffd93d" }) => (
+  <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+    <Path d="M7 2v11h3v9l7-12h-4l4-8z" fill={color} />
+  </Svg>
+);
+
+// Eye Icon for password visibility
+const EyeIcon = ({ size = 24, color = "#6b7280", crossed = false }) => (
+  <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+    <Path
+      d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"
+      fill={color}
+    />
+    {crossed && (
+      <Path
+        d="M2 2L22 22"
+        stroke={color}
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+    )}
+  </Svg>
+);
+
+// Email Icon
+const EmailIcon = ({ size = 24, color = "#6b7280" }) => (
+  <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+    <Path
+      d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"
       fill={color}
     />
   </Svg>
@@ -47,7 +71,6 @@ export default function SignInScreen({ navigation }) {
   const handleSignIn = () => {
     if (email && password) {
       setError('');
-      // Add your sign-in logic here
       navigation.navigate('Tab');
     } else {
       setError('Please fill all fields');
@@ -56,65 +79,87 @@ export default function SignInScreen({ navigation }) {
 
   return (
     <>
-      <StatusBar barStyle="light-content" backgroundColor="#16a085" />
+      <StatusBar barStyle="light-content" backgroundColor="#0a0e27" />
       <LinearGradient
-        colors={['#16a085', '#2ecc71', '#27ae60']}
-        locations={[0, 0.6, 1]}
+        colors={['#0a0e27', '#1a1f3a', '#2d1b4e']}
+        locations={[0, 0.5, 1]}
         className="flex-1"
       >
         <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
-          {/* Header Section with Background Pattern */}
-          <View className="relative pt-16 pb-8 px-6">
-            {/* Decorative Elements */}
-            <View className="absolute top-10 right-8 opacity-20">
-              <DumbbellIcon size={80} color="#ffffff" />
+          {/* Hero Section with Floating Elements */}
+          <View className="relative pt-12 pb-6">
+            {/* Animated background elements */}
+            <View className="absolute top-8 right-6 opacity-10">
+              <FireIcon size={120} color="#ff6b35" />
             </View>
-            <View className="absolute top-20 left-4 opacity-10">
-              <AppleIcon size={60} color="#ffffff" />
+            <View className="absolute top-24 left-8 opacity-10">
+              <LightningIcon size={80} color="#ffd93d" />
             </View>
-            <View className="absolute top-32 right-12 opacity-15">
-              <FitnessIcon size={50} color="#ffffff" />
+            <View className="absolute top-40 right-16 opacity-10">
+              <DumbbellIcon size={70} color="#00d4ff" />
             </View>
 
-            {/* Main Logo */}
-            <View className="items-center mt-8">
-              <View className="w-28 h-28 bg-white/90 rounded-full flex items-center justify-center mb-6 shadow-2xl">
-                <DumbbellIcon size={60} color="#16a085" />
+            {/* Logo and Branding */}
+            <View className="items-center mt-6 px-6">
+              <View className="relative mb-6">
+                <View className="w-24 h-24 bg-gradient-to-br from-orange-500 to-pink-600 rounded-2xl flex items-center justify-center shadow-2xl transform rotate-12">
+                  <View className="transform -rotate-12">
+                    <DumbbellIcon size={48} color="#ffffff" />
+                  </View>
+                </View>
+                <View className="absolute -top-2 -right-2 w-8 h-8 bg-yellow-400 rounded-full flex items-center justify-center">
+                  <FireIcon size={18} color="#ffffff" />
+                </View>
               </View>
-              <Text className="text-4xl font-bold text-white mb-2 text-center">
-                FitLife
+
+              <Text className="text-5xl font-black text-white mb-2 tracking-tight">
+                FITLIFE
               </Text>
-              <Text className="text-white/80 text-lg text-center">
-                Your Fitness Journey Starts Here
+              <View className="flex-row items-center space-x-2">
+                <View className="w-12 h-1 bg-orange-500 rounded-full" />
+                <LightningIcon size={16} color="#ffd93d" />
+                <View className="w-12 h-1 bg-orange-500 rounded-full" />
+              </View>
+              <Text className="text-gray-400 text-base mt-3 font-medium tracking-wide">
+                TRANSFORM YOUR BODY
               </Text>
             </View>
           </View>
 
-          {/* Form Section */}
-          <View className="flex-1 px-6 -mt-4">
-            <View className="bg-white rounded-3xl shadow-2xl p-6 mb-8">
-              <Text className="text-2xl font-bold text-gray-800 text-center mb-6">
-                Welcome Back
-              </Text>
+          {/* Main Form Card */}
+          <View className="px-5 mt-4">
+            <View className="bg-white/10 backdrop-blur-xl rounded-3xl p-6 border border-white/20 shadow-2xl">
+              {/* Welcome Message */}
+              <View className="mb-6">
+                <Text className="text-3xl font-black text-white mb-1">
+                  Welcome Back!
+                </Text>
+                <Text className="text-gray-400 text-base">
+                  Let&apos;s crush your goals today 💪
+                </Text>
+              </View>
 
               {error ? (
-                <View className="bg-red-50 border border-red-200 rounded-xl p-3 mb-4">
-                  <Text className="text-red-600 text-center font-medium">{error}</Text>
+                <View className="bg-red-500/20 border-2 border-red-500 rounded-2xl p-4 mb-5 flex-row items-center">
+                  <Text className="text-red-300 font-bold flex-1">⚠️ {error}</Text>
                 </View>
               ) : null}
 
               {/* Email Input */}
-              <View className="mb-5">
-                <Text className="text-gray-700 font-semibold mb-2 ml-1">
-                  Email Address
+              <View className="mb-4">
+                <Text className="text-white font-bold mb-2 ml-1 text-sm tracking-wide">
+                  EMAIL
                 </Text>
-                <View className="relative">
+                <View className="relative bg-white/5 border-2 border-white/10 rounded-2xl overflow-hidden">
+                  <View className="absolute left-4 top-0 bottom-0 justify-center z-10">
+                    <EmailIcon size={20} color="#9ca3af" />
+                  </View>
                   <TextInput
-                    className="border-2 border-gray-200 p-4 rounded-xl bg-gray-50 text-gray-800 focus:border-green-500 focus:bg-white"
+                    className="pl-12 pr-4 py-4 text-white text-base"
                     value={email}
                     onChangeText={setEmail}
-                    placeholder="Enter your email"
-                    placeholderTextColor="#9CA3AF"
+                    placeholder="your.email@example.com"
+                    placeholderTextColor="#6b7280"
                     keyboardType="email-address"
                     autoCapitalize="none"
                   />
@@ -123,70 +168,96 @@ export default function SignInScreen({ navigation }) {
 
               {/* Password Input */}
               <View className="mb-6">
-                <Text className="text-gray-700 font-semibold mb-2 ml-1">
-                  Password
+                <Text className="text-white font-bold mb-2 ml-1 text-sm tracking-wide">
+                  PASSWORD
                 </Text>
-                <View className="relative">
+                <View className="relative bg-white/5 border-2 border-white/10 rounded-2xl overflow-hidden">
                   <TextInput
-                    className="border-2 border-gray-200 p-4 rounded-xl bg-gray-50 text-gray-800 focus:border-green-500 focus:bg-white"
+                    className="pl-4 pr-14 py-4 text-white text-base"
                     value={password}
                     onChangeText={setPassword}
                     placeholder="Enter your password"
-                    placeholderTextColor="#9CA3AF"
+                    placeholderTextColor="#6b7280"
                     secureTextEntry={!isPasswordVisible}
                   />
+                  <TouchableOpacity
+                    onPress={() => setIsPasswordVisible(!isPasswordVisible)}
+                    className="absolute right-4 top-0 bottom-0 justify-center"
+                  >
+                    <EyeIcon size={22} color="#9ca3af" crossed={!isPasswordVisible} />
+                  </TouchableOpacity>
                 </View>
               </View>
 
-            {/* Sign In Button */}
-<TouchableOpacity
-  className="bg-green-600 p-4 rounded-xl items-center mb-4 shadow-lg active:scale-95"
-  onPress={handleSignIn}
-  activeOpacity={0.8}
->
-  <Text className="text-white font-bold text-lg">
-    Sign In
-  </Text>
-</TouchableOpacity>
-
               {/* Forgot Password */}
-              <TouchableOpacity className="mb-4">
-                <Text className="text-center text-green-600 font-medium">
-                  Forgot Password?
+              <TouchableOpacity className="mb-6">
+                <Text className="text-right text-orange-400 font-bold text-sm">
+                  Forgot Password? →
                 </Text>
               </TouchableOpacity>
 
+              {/* Sign In Button with Gradient */}
+              <TouchableOpacity
+                onPress={handleSignIn}
+                activeOpacity={0.8}
+                className="mb-5 overflow-hidden rounded-2xl shadow-xl"
+              >
+                <LinearGradient
+                  colors={['#ff6b35', '#f7931e']}
+                  start={{ x: 0, y: 0 }}
+                  end={{ x: 1, y: 0 }}
+                  className="py-5 items-center"
+                >
+                  <Text className="text-white font-black text-lg tracking-wide">
+                    SIGN IN →
+                  </Text>
+                </LinearGradient>
+              </TouchableOpacity>
+
               {/* Divider */}
-              <View className="flex-row items-center mb-4">
-                <View className="flex-1 h-px bg-gray-200" />
-                <Text className="mx-4 text-gray-500 font-medium">OR</Text>
-                <View className="flex-1 h-px bg-gray-200" />
+              <View className="flex-row items-center mb-5">
+                <View className="flex-1 h-px bg-white/20" />
+                <Text className="mx-4 text-gray-400 font-bold text-xs">OR</Text>
+                <View className="flex-1 h-px bg-white/20" />
               </View>
 
-              {/* Sign Up Link */}
-              <TouchableOpacity 
+              {/* Sign Up Button */}
+              <TouchableOpacity
                 onPress={() => navigation.navigate('SignUp')}
-                className="border-2 border-green-500 p-4 rounded-xl items-center"
+                className="border-2 border-orange-500 rounded-2xl py-5 items-center bg-orange-500/10"
               >
-                <Text className="text-green-600 font-bold text-lg">
-                  Create New Account
+                <Text className="text-orange-400 font-black text-lg tracking-wide">
+                  CREATE ACCOUNT
                 </Text>
               </TouchableOpacity>
             </View>
 
-            {/* Footer Icons */}
-            <View className="flex-row justify-center items-center space-x-8 mb-8">
-              <View className="items-center">
-                <DumbbellIcon size={30} color="#ffffff" />
-                <Text className="text-white/80 text-xs mt-1">Workouts</Text>
-              </View>
-              <View className="items-center">
-                <AppleIcon size={30} color="#ffffff" />
-                <Text className="text-white/80 text-xs mt-1">Nutrition</Text>
-              </View>
-              <View className="items-center">
-                <FitnessIcon size={30} color="#ffffff" />
-                <Text className="text-white/80 text-xs mt-1">Tracking</Text>
+            {/* Features Section */}
+            <View className="mt-8 mb-8">
+              <View className="flex-row justify-between px-2">
+                <View className="items-center flex-1">
+                  <View className="w-16 h-16 bg-gradient-to-br from-orange-500 to-red-600 rounded-2xl flex items-center justify-center mb-2 shadow-lg">
+                    <DumbbellIcon size={32} color="#ffffff" />
+                  </View>
+                  <Text className="text-white font-bold text-xs">WORKOUTS</Text>
+                  <Text className="text-gray-500 text-xs">500+ Plans</Text>
+                </View>
+                
+                <View className="items-center flex-1">
+                  <View className="w-16 h-16 bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl flex items-center justify-center mb-2 shadow-lg">
+                    <FireIcon size={32} color="#ffffff" />
+                  </View>
+                  <Text className="text-white font-bold text-xs">NUTRITION</Text>
+                  <Text className="text-gray-500 text-xs">1000+ Meals</Text>
+                </View>
+                
+                <View className="items-center flex-1">
+                  <View className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center mb-2 shadow-lg">
+                    <LightningIcon size={32} color="#ffffff" />
+                  </View>
+                  <Text className="text-white font-bold text-xs">TRACKING</Text>
+                  <Text className="text-gray-500 text-xs">AI Powered</Text>
+                </View>
               </View>
             </View>
           </View>

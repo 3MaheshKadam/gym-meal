@@ -7,8 +7,10 @@ import {
   StatusBar, 
   TextInput, 
   SafeAreaView,
-  Alert 
+  Alert,
+  Platform
 } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 import { Calendar } from 'react-native-calendars';
 import Svg, { Path, Circle } from 'react-native-svg';
 
@@ -60,8 +62,8 @@ const DeliveryScreen = ({ navigation }) => {
     { id: '20:00-22:00', label: '8:00 PM - 10:00 PM', popular: false }
   ];
 
-  // Professional Icons
-  const LocationIcon = ({ size = 24, color = "#10b981" }) => (
+  // Enhanced Icons
+  const LocationIcon = ({ size = 24, color = "#ff6b35" }) => (
     <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
       <Path
         d="M21 10C21 17 12 23 12 23S3 17 3 10C3 5.02944 7.02944 1 12 1C16.9706 1 21 5.02944 21 10Z"
@@ -74,14 +76,14 @@ const DeliveryScreen = ({ navigation }) => {
     </Svg>
   );
 
-  const ClockIcon = ({ size = 24, color = "#6b7280" }) => (
+  const ClockIcon = ({ size = 24, color = "#ff6b35" }) => (
     <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
       <Circle cx="12" cy="12" r="10" stroke={color} strokeWidth="2" />
       <Path d="M12 6V12L16 14" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
     </Svg>
   );
 
-  const BellIcon = ({ size = 24, color = "#6b7280" }) => (
+  const BellIcon = ({ size = 24, color = "#ff6b35" }) => (
     <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
       <Path
         d="M18 8C18 6.4087 17.3679 4.88258 16.2426 3.75736C15.1174 2.63214 13.5913 2 12 2C10.4087 2 8.88258 2.63214 7.75736 3.75736C6.63214 4.88258 6 6.4087 6 8C6 15 3 17 3 17H21C21 17 18 15 18 8Z"
@@ -94,7 +96,7 @@ const DeliveryScreen = ({ navigation }) => {
     </Svg>
   );
 
-  const CalendarIcon = ({ size = 24, color = "#6b7280" }) => (
+  const CalendarIcon = ({ size = 24, color = "#ff6b35" }) => (
     <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
       <Path
         d="M19 4H5C3.89543 4 3 4.89543 3 6V20C3 21.1046 3.89543 22 5 22H19C20.1046 22 21 21.1046 21 20V6C21 4.89543 20.1046 4 19 4Z"
@@ -109,26 +111,26 @@ const DeliveryScreen = ({ navigation }) => {
     </Svg>
   );
 
-  const PlusIcon = ({ size = 20, color = "#10b981" }) => (
+  const PlusIcon = ({ size = 20, color = "#ffffff" }) => (
     <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
       <Path d="M12 5V19" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
       <Path d="M5 12H19" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
     </Svg>
   );
 
-  const ArrowLeftIcon = ({ size = 24, color = "#6b7280" }) => (
+  const ArrowLeftIcon = ({ size = 24, color = "#ffffff" }) => (
     <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
       <Path d="M19 12H5M12 19L5 12L12 5" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
     </Svg>
   );
 
-  const CheckIcon = ({ size = 20, color = "#10b981" }) => (
+  const CheckIcon = ({ size = 20, color = "#ffffff" }) => (
     <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-      <Path d="M20 6L9 17L4 12" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      <Path d="M20 6L9 17L4 12" stroke={color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
     </Svg>
   );
 
-  const TruckIcon = ({ size = 24, color = "#6b7280" }) => (
+  const TruckIcon = ({ size = 24, color = "#ffffff" }) => (
     <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
       <Path
         d="M1 3H15V13H1V3Z"
@@ -146,6 +148,12 @@ const DeliveryScreen = ({ navigation }) => {
       />
       <Circle cx="5.5" cy="18.5" r="2.5" stroke={color} strokeWidth="2" />
       <Circle cx="18.5" cy="18.5" r="2.5" stroke={color} strokeWidth="2" />
+    </Svg>
+  );
+
+  const LightningIcon = ({ size = 24, color = "#ffd93d" }) => (
+    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+      <Path d="M7 2v11h3v9l7-12h-4l4-8z" fill={color} />
     </Svg>
   );
 
@@ -190,39 +198,75 @@ const DeliveryScreen = ({ navigation }) => {
   const AddressCard = ({ addressKey, addressData, isSelected }) => (
     <TouchableOpacity
       onPress={() => setSelectedAddress(addressKey)}
-      className={`rounded-2xl p-4 mb-3 border-2 ${
-        isSelected ? 'border-emerald-500 bg-emerald-50' : 'border-gray-200 bg-white'
-      }`}
+      activeOpacity={0.8}
+      className="mb-3"
     >
-      <View className="flex-row items-start">
-        <View className={`p-2 rounded-xl mr-3 ${
-          isSelected ? 'bg-emerald-500' : 'bg-gray-100'
-        }`}>
-          <LocationIcon size={20} color={isSelected ? 'white' : '#6b7280'} />
-        </View>
-        
-        <View className="flex-1">
-          <Text className={`font-semibold text-base mb-1 ${
-            isSelected ? 'text-emerald-600' : 'text-gray-900'
-          }`}>
-            {addressData.label}
-          </Text>
-          <Text className="text-gray-600 text-sm mb-2 leading-5">
-            {addressData.address}
-          </Text>
-          {addressData.instructions && (
-            <Text className="text-gray-500 text-xs">
-              Instructions: {addressData.instructions}
-            </Text>
-          )}
-        </View>
-        
-        {isSelected && (
-          <View className="bg-emerald-500 rounded-full p-1">
-            <CheckIcon size={16} color="white" />
+      {isSelected ? (
+        <LinearGradient
+          colors={['#ff6b35', '#f7931e']}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 1 }}
+          style={{ padding: 2, borderRadius: 16 }}
+        >
+          <View className="bg-gradient-to-br from-slate-900 to-slate-800 rounded-2xl p-4">
+            <View className="flex-row items-start">
+              <LinearGradient
+                colors={['#ff6b35', '#f7931e']}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 0 }}
+                style={{ padding: 10, borderRadius: 12, marginRight: 12 }}
+              >
+                <LocationIcon size={20} color="white" />
+              </LinearGradient>
+              
+              <View className="flex-1">
+                <Text className="font-black text-white text-base mb-1">
+                  {addressData.label}
+                </Text>
+                <Text className="text-gray-300 text-sm mb-2 leading-5 font-semibold">
+                  {addressData.address}
+                </Text>
+                {addressData.instructions && (
+                  <Text className="text-gray-400 text-xs">
+                    Instructions: {addressData.instructions}
+                  </Text>
+                )}
+              </View>
+              
+              <LinearGradient
+                colors={['#10b981', '#059669']}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 0 }}
+                style={{ width: 24, height: 24, borderRadius: 12, alignItems: 'center', justifyContent: 'center' }}
+              >
+                <CheckIcon size={14} color="white" />
+              </LinearGradient>
+            </View>
           </View>
-        )}
-      </View>
+        </LinearGradient>
+      ) : (
+        <View className="bg-white/10 border-2 border-white/20 rounded-2xl p-4">
+          <View className="flex-row items-start">
+            <View className="bg-white/5 p-2 rounded-xl mr-3">
+              <LocationIcon size={20} color="#9ca3af" />
+            </View>
+            
+            <View className="flex-1">
+              <Text className="font-bold text-white text-base mb-1">
+                {addressData.label}
+              </Text>
+              <Text className="text-gray-400 text-sm mb-2 leading-5">
+                {addressData.address}
+              </Text>
+              {addressData.instructions && (
+                <Text className="text-gray-500 text-xs">
+                  Instructions: {addressData.instructions}
+                </Text>
+              )}
+            </View>
+          </View>
+        </View>
+      )}
     </TouchableOpacity>
   );
 
@@ -233,126 +277,197 @@ const DeliveryScreen = ({ navigation }) => {
         ...deliverySettings,
         timeSlot: slot.id
       })}
-      className={`rounded-2xl p-4 mb-3 border-2 ${
-        isSelected ? 'border-emerald-500 bg-emerald-50' : 'border-gray-200 bg-white'
-      }`}
+      activeOpacity={0.8}
+      className="mb-3"
     >
-      <View className="flex-row items-center justify-between">
-        <View className="flex-row items-center">
-          <View className={`p-2 rounded-xl mr-3 ${
-            isSelected ? 'bg-emerald-500' : 'bg-gray-100'
-          }`}>
-            <ClockIcon size={20} color={isSelected ? 'white' : '#6b7280'} />
+      {isSelected ? (
+        <LinearGradient
+          colors={['#ff6b35', '#f7931e']}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 1 }}
+          style={{ padding: 2, borderRadius: 16 }}
+        >
+          <View className="bg-gradient-to-br from-slate-900 to-slate-800 rounded-2xl p-4">
+            <View className="flex-row items-center justify-between">
+              <View className="flex-row items-center flex-1">
+                <LinearGradient
+                  colors={['#ff6b35', '#f7931e']}
+                  start={{ x: 0, y: 0 }}
+                  end={{ x: 1, y: 0 }}
+                  style={{ padding: 10, borderRadius: 12, marginRight: 12 }}
+                >
+                  <ClockIcon size={20} color="white" />
+                </LinearGradient>
+                <View className="flex-1">
+                  <Text className="font-black text-white">
+                    {slot.label}
+                  </Text>
+                  {slot.popular && (
+                    <Text className="text-orange-400 text-xs font-bold">⚡ Most Popular</Text>
+                  )}
+                </View>
+              </View>
+              
+              <LinearGradient
+                colors={['#10b981', '#059669']}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 0 }}
+                style={{ width: 24, height: 24, borderRadius: 12, alignItems: 'center', justifyContent: 'center' }}
+              >
+                <CheckIcon size={14} color="white" />
+              </LinearGradient>
+            </View>
           </View>
-          <View>
-            <Text className={`font-semibold ${
-              isSelected ? 'text-emerald-600' : 'text-gray-900'
-            }`}>
-              {slot.label}
-            </Text>
-            {slot.popular && (
-              <Text className="text-emerald-600 text-xs font-medium">Most Popular</Text>
-            )}
+        </LinearGradient>
+      ) : (
+        <View className="bg-white/10 border-2 border-white/20 rounded-2xl p-4">
+          <View className="flex-row items-center justify-between">
+            <View className="flex-row items-center">
+              <View className="bg-white/5 p-2 rounded-xl mr-3">
+                <ClockIcon size={20} color="#9ca3af" />
+              </View>
+              <View>
+                <Text className="font-bold text-white">
+                  {slot.label}
+                </Text>
+                {slot.popular && (
+                  <Text className="text-orange-400 text-xs font-semibold">⚡ Most Popular</Text>
+                )}
+              </View>
+            </View>
           </View>
         </View>
-        
-        {isSelected && (
-          <View className="bg-emerald-500 rounded-full p-1">
-            <CheckIcon size={16} color="white" />
-          </View>
-        )}
-      </View>
+      )}
     </TouchableOpacity>
   );
 
   // Notification Toggle Component
   const NotificationToggle = ({ title, subtitle, value, onToggle }) => (
-    <View className="flex-row items-center justify-between py-4 border-b border-gray-100 last:border-b-0">
+    <View className="flex-row items-center justify-between py-4 border-b border-white/10 last:border-b-0">
       <View className="flex-1">
-        <Text className="text-gray-900 font-medium">{title}</Text>
-        <Text className="text-gray-600 text-sm">{subtitle}</Text>
+        <Text className="text-white font-bold">{title}</Text>
+        <Text className="text-gray-400 text-sm">{subtitle}</Text>
       </View>
       <TouchableOpacity
         onPress={onToggle}
-        className={`w-12 h-6 rounded-full ${
-          value ? 'bg-emerald-500' : 'bg-gray-300'
-        }`}
+        activeOpacity={0.8}
       >
-        <View className={`w-5 h-5 bg-white rounded-full mt-0.5 ${
-          value ? 'ml-6' : 'ml-0.5'
-        } transition-all duration-200`} />
+        <LinearGradient
+          colors={value ? ['#10b981', '#059669'] : ['#374151', '#4b5563']}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 0 }}
+          style={{
+            width: 48,
+            height: 28,
+            borderRadius: 14,
+            justifyContent: 'center',
+            paddingHorizontal: 2,
+          }}
+        >
+          <View
+            style={{
+              width: 24,
+              height: 24,
+              borderRadius: 12,
+              backgroundColor: 'white',
+              alignSelf: value ? 'flex-end' : 'flex-start',
+            }}
+          />
+        </LinearGradient>
       </TouchableOpacity>
     </View>
   );
 
   return (
-    <View className="flex-1 bg-gray-50">
-      <SafeAreaView className="flex-1">
-        <StatusBar barStyle="dark-content" backgroundColor="#f9fafb" />
+    <LinearGradient
+      colors={['#0a0e27', '#1a1f3a', '#2d1b4e']}
+      locations={[0, 0.5, 1]}
+      style={{ flex: 1 }}
+    >
+      <StatusBar barStyle="light-content" backgroundColor="transparent" translucent />
+      <SafeAreaView style={{ flex: 1, paddingTop: StatusBar.currentHeight || 0 }}>
         
         {/* Header */}
-        <View className="bg-white px-6 py-4 border-b border-gray-100">
+        <View className="px-6 pt-4 pb-4">
           <View className="flex-row items-center">
             <TouchableOpacity 
               onPress={() => navigation?.goBack()}
-              className="bg-gray-50 p-2 rounded-xl mr-4"
+              className="bg-white/10 border border-white/20 p-3 rounded-xl mr-4"
+              activeOpacity={0.7}
             >
-              <ArrowLeftIcon size={20} color="#6b7280" />
+              <ArrowLeftIcon size={20} color="#ffffff" />
             </TouchableOpacity>
             <View className="flex-1">
-              <Text className="text-2xl font-bold text-gray-900">Delivery Settings</Text>
-              <Text className="text-gray-500 text-sm">Customize your meal delivery preferences</Text>
+              <Text className="text-2xl font-black text-white tracking-tight">DELIVERY</Text>
+              <View className="flex-row items-center mt-1">
+                <View className="w-6 h-1 bg-orange-500 rounded-full mr-1" />
+                <LightningIcon size={10} color="#ffd93d" />
+                <View className="w-6 h-1 bg-orange-500 rounded-full ml-1" />
+              </View>
             </View>
           </View>
         </View>
 
         <ScrollView 
           showsVerticalScrollIndicator={false} 
-          className="flex-1 px-6 pt-6"
+          className="flex-1 px-6"
+          contentContainerStyle={{ paddingBottom: Platform.OS === 'ios' ? 100 : 80 }}
         >
           {/* Delivery Summary Card */}
-          <View className="bg-emerald-50 rounded-3xl p-6 mb-6 border border-emerald-100">
+          <View className="bg-gradient-to-br from-green-500/20 to-emerald-600/20 border-2 border-green-500/30 rounded-3xl p-6 mb-5">
             <View className="flex-row items-center mb-4">
-              <View className="bg-emerald-500 p-3 rounded-xl mr-4">
+              <LinearGradient
+                colors={['#10b981', '#059669']}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 0 }}
+                style={{ padding: 12, borderRadius: 16, marginRight: 16 }}
+              >
                 <TruckIcon size={24} color="white" />
-              </View>
+              </LinearGradient>
               <View className="flex-1">
-                <Text className="text-emerald-800 font-bold text-lg">Free Delivery</Text>
-                <Text className="text-emerald-600 text-sm">On orders above ₹500</Text>
+                <Text className="text-white font-black text-lg tracking-wide">FREE DELIVERY</Text>
+                <Text className="text-green-300 text-sm font-semibold">On orders above ₹500</Text>
               </View>
             </View>
             
             <View className="flex-row justify-between">
               <View className="items-center">
-                <Text className="text-emerald-800 font-bold text-lg">30-45</Text>
-                <Text className="text-emerald-600 text-xs">Minutes</Text>
+                <Text className="text-white font-black text-lg">30-45</Text>
+                <Text className="text-green-300 text-xs font-semibold">Minutes</Text>
               </View>
               <View className="items-center">
-                <Text className="text-emerald-800 font-bold text-lg">₹0</Text>
-                <Text className="text-emerald-600 text-xs">Delivery Fee</Text>
+                <Text className="text-white font-black text-lg">₹0</Text>
+                <Text className="text-green-300 text-xs font-semibold">Delivery Fee</Text>
               </View>
               <View className="items-center">
-                <Text className="text-emerald-800 font-bold text-lg">24/7</Text>
-                <Text className="text-emerald-600 text-xs">Support</Text>
+                <Text className="text-white font-black text-lg">24/7</Text>
+                <Text className="text-green-300 text-xs font-semibold">Support</Text>
               </View>
             </View>
           </View>
 
           {/* Delivery Address */}
-          <View className="bg-white rounded-3xl p-6 mb-6 shadow-sm border border-gray-50">
+          <View className="bg-white/10 backdrop-blur-xl rounded-3xl p-5 mb-5 border border-white/20">
             <View className="flex-row items-center justify-between mb-4">
               <View className="flex-row items-center">
-                <View className="bg-gray-50 p-2 rounded-xl mr-3">
-                  <LocationIcon size={20} color="#10b981" />
+                <View className="w-10 h-10 bg-gradient-to-br from-orange-500 to-pink-600 rounded-xl mr-3 items-center justify-center">
+                  <LocationIcon size={20} color="#ffffff" />
                 </View>
-                <Text className="text-gray-900 text-lg font-semibold">Delivery Address</Text>
+                <Text className="text-white text-lg font-black tracking-wide">ADDRESS</Text>
               </View>
               
               <TouchableOpacity
                 onPress={() => setShowAddressForm(true)}
-                className="bg-emerald-50 p-2 rounded-xl"
+                activeOpacity={0.7}
               >
-                <PlusIcon size={16} color="#10b981" />
+                <LinearGradient
+                  colors={['#10b981', '#059669']}
+                  start={{ x: 0, y: 0 }}
+                  end={{ x: 1, y: 0 }}
+                  style={{ padding: 8, borderRadius: 12 }}
+                >
+                  <PlusIcon size={16} color="white" />
+                </LinearGradient>
               </TouchableOpacity>
             </View>
 
@@ -367,19 +482,21 @@ const DeliveryScreen = ({ navigation }) => {
 
             {/* Add New Address Form */}
             {showAddressForm && (
-              <View className="bg-gray-50 rounded-2xl p-4 mt-4">
-                <Text className="font-semibold text-gray-900 mb-3">Add New Address</Text>
+              <View className="bg-white/5 border border-white/10 rounded-2xl p-4 mt-4">
+                <Text className="font-black text-white mb-3 tracking-wide">ADD NEW ADDRESS</Text>
                 
                 <TextInput
-                  className="bg-white border border-gray-200 rounded-xl p-3 mb-3"
+                  className="bg-white/10 border border-white/20 rounded-xl p-3 mb-3 text-white"
                   placeholder="Address Label (e.g., Home, Office)"
+                  placeholderTextColor="#6b7280"
                   value={newAddress.label}
                   onChangeText={(text) => setNewAddress({...newAddress, label: text})}
                 />
                 
                 <TextInput
-                  className="bg-white border border-gray-200 rounded-xl p-3 mb-3"
+                  className="bg-white/10 border border-white/20 rounded-xl p-3 mb-3 text-white"
                   placeholder="Full Address"
+                  placeholderTextColor="#6b7280"
                   multiline
                   numberOfLines={2}
                   value={newAddress.address}
@@ -387,8 +504,9 @@ const DeliveryScreen = ({ navigation }) => {
                 />
                 
                 <TextInput
-                  className="bg-white border border-gray-200 rounded-xl p-3 mb-4"
+                  className="bg-white/10 border border-white/20 rounded-xl p-3 mb-4 text-white"
                   placeholder="Delivery Instructions (optional)"
+                  placeholderTextColor="#6b7280"
                   value={newAddress.instructions}
                   onChangeText={(text) => setNewAddress({...newAddress, instructions: text})}
                 />
@@ -396,15 +514,24 @@ const DeliveryScreen = ({ navigation }) => {
                 <View className="flex-row">
                   <TouchableOpacity
                     onPress={() => setShowAddressForm(false)}
-                    className="flex-1 bg-gray-200 rounded-xl p-3 mr-2"
+                    className="flex-1 bg-white/10 border border-white/20 rounded-xl p-3 mr-2"
+                    activeOpacity={0.7}
                   >
-                    <Text className="text-center text-gray-700 font-medium">Cancel</Text>
+                    <Text className="text-center text-white font-bold">Cancel</Text>
                   </TouchableOpacity>
                   <TouchableOpacity
                     onPress={handleAddAddress}
-                    className="flex-1 bg-emerald-500 rounded-xl p-3 ml-2"
+                    activeOpacity={0.8}
+                    className="flex-1 ml-2 overflow-hidden rounded-xl"
                   >
-                    <Text className="text-center text-white font-medium">Add Address</Text>
+                    <LinearGradient
+                      colors={['#10b981', '#059669']}
+                      start={{ x: 0, y: 0 }}
+                      end={{ x: 1, y: 0 }}
+                      style={{ padding: 12 }}
+                    >
+                      <Text className="text-center text-white font-bold">Add</Text>
+                    </LinearGradient>
                   </TouchableOpacity>
                 </View>
               </View>
@@ -412,12 +539,12 @@ const DeliveryScreen = ({ navigation }) => {
           </View>
 
           {/* Delivery Time */}
-          <View className="bg-white rounded-3xl p-6 mb-6 shadow-sm border border-gray-50">
+          <View className="bg-white/10 backdrop-blur-xl rounded-3xl p-5 mb-5 border border-white/20">
             <View className="flex-row items-center mb-4">
-              <View className="bg-gray-50 p-2 rounded-xl mr-3">
-                <ClockIcon size={20} color="#6b7280" />
+              <View className="w-10 h-10 bg-gradient-to-br from-orange-500 to-pink-600 rounded-xl mr-3 items-center justify-center">
+                <ClockIcon size={20} color="#ffffff" />
               </View>
-              <Text className="text-gray-900 text-lg font-semibold">Delivery Time</Text>
+              <Text className="text-white text-lg font-black tracking-wide">TIME SLOT</Text>
             </View>
 
             {timeSlots.map((slot) => (
@@ -430,47 +557,47 @@ const DeliveryScreen = ({ navigation }) => {
           </View>
 
           {/* Delivery Calendar */}
-          <View className="bg-white rounded-3xl p-6 mb-6 shadow-sm border border-gray-50">
+          <View className="bg-white/10 backdrop-blur-xl rounded-3xl p-5 mb-5 border border-white/20">
             <View className="flex-row items-center mb-4">
-              <View className="bg-gray-50 p-2 rounded-xl mr-3">
-                <CalendarIcon size={20} color="#6b7280" />
+              <View className="w-10 h-10 bg-gradient-to-br from-orange-500 to-pink-600 rounded-xl mr-3 items-center justify-center">
+                <CalendarIcon size={20} color="#ffffff" />
               </View>
-              <Text className="text-gray-900 text-lg font-semibold">Schedule Delivery</Text>
+              <Text className="text-white text-lg font-black tracking-wide">SCHEDULE</Text>
             </View>
 
             <Calendar
               onDayPress={handleDayPress}
               markedDates={{
-                [selectedDate]: { selected: true, selectedColor: '#10b981' },
+                [selectedDate]: { selected: true, selectedColor: '#ff6b35' },
                 ...Object.keys(deliverySchedule).reduce((acc, date) => ({
                   ...acc,
-                  [date]: { marked: true, dotColor: '#10b981' }
+                  [date]: { marked: true, dotColor: '#ff6b35' }
                 }), {})
               }}
               theme={{
                 backgroundColor: 'transparent',
                 calendarBackground: 'transparent',
-                textSectionTitleColor: '#6b7280',
-                selectedDayBackgroundColor: '#10b981',
+                textSectionTitleColor: '#9ca3af',
+                selectedDayBackgroundColor: '#ff6b35',
                 selectedDayTextColor: '#ffffff',
-                todayTextColor: '#10b981',
-                dayTextColor: '#1f2937',
-                textDisabledColor: '#d1d5db',
-                arrowColor: '#10b981',
-                monthTextColor: '#1f2937',
-                textDayFontWeight: '500',
-                textMonthFontWeight: '600',
-                textDayHeaderFontWeight: '500'
+                todayTextColor: '#ff6b35',
+                dayTextColor: '#ffffff',
+                textDisabledColor: '#4b5563',
+                arrowColor: '#ff6b35',
+                monthTextColor: '#ffffff',
+                textDayFontWeight: '600',
+                textMonthFontWeight: '800',
+                textDayHeaderFontWeight: '600'
               }}
               minDate={new Date().toISOString().split('T')[0]}
             />
 
             {selectedDate && (
-              <View className="bg-emerald-50 rounded-2xl p-4 mt-4">
-                <Text className="text-emerald-800 font-semibold mb-2">
-                  Delivery for {new Date(selectedDate).toLocaleDateString()}
+              <View className="bg-gradient-to-br from-orange-500/20 to-pink-600/20 border border-orange-500/30 rounded-2xl p-4 mt-4">
+                <Text className="text-white font-black mb-2 tracking-wide">
+                  DELIVERY FOR {new Date(selectedDate).toLocaleDateString().toUpperCase()}
                 </Text>
-                <Text className="text-emerald-600 text-sm">
+                <Text className="text-gray-300 text-sm font-semibold">
                   Your meals will be delivered to {addresses[selectedAddress]?.label} between {
                     timeSlots.find(slot => slot.id === deliverySettings.timeSlot)?.label
                   }
@@ -480,12 +607,12 @@ const DeliveryScreen = ({ navigation }) => {
           </View>
 
           {/* Notifications */}
-          <View className="bg-white rounded-3xl p-6 mb-6 shadow-sm border border-gray-50">
+          <View className="bg-white/10 backdrop-blur-xl rounded-3xl p-5 mb-5 border border-white/20">
             <View className="flex-row items-center mb-4">
-              <View className="bg-gray-50 p-2 rounded-xl mr-3">
-                <BellIcon size={20} color="#6b7280" />
+              <View className="w-10 h-10 bg-gradient-to-br from-orange-500 to-pink-600 rounded-xl mr-3 items-center justify-center">
+                <BellIcon size={20} color="#ffffff" />
               </View>
-              <Text className="text-gray-900 text-lg font-semibold">Notification Preferences</Text>
+              <Text className="text-white text-lg font-black tracking-wide">NOTIFICATIONS</Text>
             </View>
 
             <NotificationToggle
@@ -529,11 +656,12 @@ const DeliveryScreen = ({ navigation }) => {
           </View>
 
           {/* Special Instructions */}
-          <View className="bg-white rounded-3xl p-6 mb-6 shadow-sm border border-gray-50">
-            <Text className="text-gray-900 text-lg font-semibold mb-4">Special Instructions</Text>
+          <View className="bg-white/10 backdrop-blur-xl rounded-3xl p-5 mb-5 border border-white/20">
+            <Text className="text-white text-lg font-black mb-4 tracking-wide">SPECIAL INSTRUCTIONS</Text>
             <TextInput
-              className="bg-gray-50 border border-gray-200 rounded-xl p-4 text-gray-900"
-              placeholder="Any special delivery instructions? (e.g., Ring doorbell, Call on arrival, Leave at door)"
+              className="bg-white/5 border border-white/10 rounded-xl p-4 text-white"
+              placeholder="Any special delivery instructions? (e.g., Ring doorbell, Call on arrival)"
+              placeholderTextColor="#6b7280"
               multiline
               numberOfLines={3}
               value={deliverySettings.specialInstructions}
@@ -547,17 +675,34 @@ const DeliveryScreen = ({ navigation }) => {
           {/* Save Button */}
           <TouchableOpacity
             onPress={handleSave}
-            className="bg-emerald-500 rounded-2xl p-5 items-center mb-8 shadow-sm"
             activeOpacity={0.8}
+            className="mb-8 overflow-hidden rounded-2xl"
           >
-            <Text className="text-white font-semibold text-lg">Save Delivery Preferences</Text>
-            <Text className="text-emerald-100 text-sm mt-1">
-              Continue to payment and complete your order
-            </Text>
+            <LinearGradient
+              colors={['#ff6b35', '#f7931e']}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 0 }}
+              style={{
+                padding: 20,
+                alignItems: 'center',
+                shadowColor: '#ff6b35',
+                shadowOffset: { width: 0, height: 6 },
+                shadowOpacity: 0.4,
+                shadowRadius: 12,
+                elevation: 8,
+              }}
+            >
+              <Text className="text-white font-black text-lg tracking-wide">
+                SAVE PREFERENCES →
+              </Text>
+              <Text className="text-white/80 text-sm mt-1 font-bold">
+                Continue to payment and complete your order
+              </Text>
+            </LinearGradient>
           </TouchableOpacity>
         </ScrollView>
       </SafeAreaView>
-    </View>
+    </LinearGradient>
   );
 };
 

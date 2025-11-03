@@ -1,340 +1,3 @@
-// import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-// import { createStackNavigator } from '@react-navigation/stack';
-// import React from 'react';
-// import { 
-//   View, 
-//   Platform, 
-//   Dimensions, 
-//   TouchableOpacity, 
-//   Text,
-//   Animated
-// } from 'react-native';
-// import Svg, { Path, Circle, Defs, LinearGradient, Stop, G } from 'react-native-svg';
-// import MealPlanScreen from '../screens/MealPlanScreen';
-// import SubscriptionScreen from '../screens/SubscriptionScreen';
-// import DeliveryScreen from '../screens/DeliveryScreen';
-// import PaymentScreen from '../screens/PaymentScreen';
-// import ProfileScreen from '../screens/ProfileScreen';
-// import ProfileInputScreen from '../screens/ProfileInputScreen';
-
-// const Tab = createBottomTabNavigator();
-// const MealStack = createStackNavigator();
-// const { width } = Dimensions.get('window');
-
-// // Enhanced Tab Icons with Micro-animations
-// const TabIcon = ({ name, focused, size = 24 }) => {
-//   const animatedValue = new Animated.Value(focused ? 1 : 0);
-
-//   React.useEffect(() => {
-//     Animated.spring(animatedValue, {
-//       toValue: focused ? 1 : 0,
-//       useNativeDriver: true,
-//       tension: 100,
-//       friction: 8,
-//     }).start();
-//   }, [focused]);
-
-//   const scale = animatedValue.interpolate({
-//     inputRange: [0, 1],
-//     outputRange: [1, 1.2],
-//   });
-
-//   const getIcon = () => {
-//     const iconColor = focused ? '#10b981' : '#94a3b8';
-    
-//     switch (name) {
-//       case 'meals':
-//         return (
-//           <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-//             <Path 
-//               d="M18 15L12 9L6 15" 
-//               stroke={iconColor}
-//               strokeWidth="2.5"
-//               strokeLinecap="round"
-//               strokeLinejoin="round"
-//             />
-//             <Circle 
-//               cx="12" 
-//               cy="12" 
-//               r="3" 
-//               fill={focused ? iconColor : 'none'}
-//               stroke={iconColor}
-//               strokeWidth="2"
-//             />
-//             <Path 
-//               d="M19.4 15C19.2669 15.3016 19.2272 15.6362 19.286 15.9606C19.3448 16.285 19.4995 16.5843 19.73 16.82L19.79 16.88C19.976 17.0657 20.1235 17.2863 20.2241 17.5291" 
-//               stroke={iconColor}
-//               strokeWidth="1.5"
-//               strokeLinecap="round"
-//             />
-//           </Svg>
-//         );
-        
-//       case 'subscriptions':
-//         return (
-//           <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-//             <Path 
-//               d="M3 7V19C3 20.1046 3.89543 21 5 21H19C20.1046 21 21 20.1046 21 19V7" 
-//               stroke={iconColor}
-//               strokeWidth="2.5"
-//               strokeLinecap="round"
-//               strokeLinejoin="round"
-//             />
-//             <Path 
-//               d="M21 5L12 12L3 5" 
-//               stroke={iconColor}
-//               strokeWidth="2.5"
-//               strokeLinecap="round"
-//               strokeLinejoin="round"
-//             />
-//             <Path 
-//               d="M3 5H21V7C21 7.55228 20.4477 8 20 8H4C3.44772 8 3 7.55228 3 7V5Z" 
-//               fill={focused ? iconColor : 'none'}
-//               stroke={iconColor}
-//               strokeWidth="2"
-//             />
-//           </Svg>
-//         );
-        
-//       case 'deliveries':
-//         return (
-//           <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-//             <Path 
-//               d="M5 17H4C3.44772 17 3 16.5523 3 16V6C3 5.44772 3.44772 5 4 5H14C14.5523 5 15 5.44772 15 6V8" 
-//               stroke={iconColor}
-//               strokeWidth="2.5"
-//               strokeLinecap="round"
-//               strokeLinejoin="round"
-//             />
-//             <Path 
-//               d="M16 17H20L23 12V18C23 18.5523 22.5523 19 22 19H21" 
-//               stroke={iconColor}
-//               strokeWidth="2.5"
-//               strokeLinecap="round"
-//               strokeLinejoin="round"
-//             />
-//             <Circle 
-//               cx="7" 
-//               cy="17" 
-//               r="2" 
-//               fill={focused ? iconColor : 'none'}
-//               stroke={iconColor}
-//               strokeWidth="2"
-//             />
-//             <Circle 
-//               cx="17" 
-//               cy="17" 
-//               r="2" 
-//               fill={focused ? iconColor : 'none'}
-//               stroke={iconColor}
-//               strokeWidth="2"
-//             />
-//           </Svg>
-//         );
-        
-//       case 'profile':
-//         return (
-//           <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-//             <Circle 
-//               cx="12" 
-//               cy="6" 
-//               r="4" 
-//               fill={focused ? iconColor : 'none'}
-//               stroke={iconColor}
-//               strokeWidth="2.5"
-//             />
-//             <Path 
-//               d="M20 21V19C20 16.7909 18.2091 15 16 15H8C5.79086 15 4 16.7909 4 19V21" 
-//               stroke={iconColor}
-//               strokeWidth="2.5"
-//               strokeLinecap="round"
-//               strokeLinejoin="round"
-//             />
-//           </Svg>
-//         );
-        
-//       default:
-//         return null;
-//     }
-//   };
-
-//   return (
-//     <Animated.View style={{ 
-//       transform: [{ scale }],
-//       alignItems: 'center',
-//       justifyContent: 'center',
-//     }}>
-//       {getIcon()}
-//     </Animated.View>
-//   );
-// };
-
-// // Floating Neumorphic Tab Bar Component
-// const FloatingTabBar = ({ state, descriptors, navigation }) => {
-//   const tabLabels = {
-//     'Meals': 'Meals',
-//     'Subscriptions': 'Plans',
-//     'Deliveries': 'Orders',
-//     'Profile': 'Profile'
-//   };
-
-//   const tabIcons = {
-//     'Meals': 'meals',
-//     'Subscriptions': 'subscriptions',
-//     'Deliveries': 'deliveries',
-//     'Profile': 'profile'
-//   };
-
-//   return (
-//     <View style={{
-//       position: 'absolute',
-//       bottom: Platform.OS === 'ios' ? 30 : 20,
-//       left: 20,
-//       right: 20,
-//       height: 70,
-//       backgroundColor: 'rgba(255, 255, 255, 0.95)',
-//       borderRadius: 35,
-//       shadowColor: '#10b981',
-//       shadowOffset: {
-//         width: 0,
-//         height: 10,
-//       },
-//       shadowOpacity: 0.15,
-//       shadowRadius: 25,
-//       elevation: 15,
-//       borderWidth: 1,
-//       borderColor: 'rgba(16, 185, 129, 0.1)',
-//     }}>
-//       {/* Neumorphic Inner Shadow Effect */}
-//       <View style={{
-//         position: 'absolute',
-//         top: 2,
-//         left: 2,
-//         right: 2,
-//         bottom: 2,
-//         borderRadius: 33,
-//         backgroundColor: 'rgba(255, 255, 255, 0.8)',
-//         shadowColor: '#000',
-//         shadowOffset: {
-//           width: 0,
-//           height: -2,
-//         },
-//         shadowOpacity: 0.03,
-//         shadowRadius: 4,
-//       }} />
-      
-//       {/* Tab Items Container */}
-//       <View style={{
-//         flexDirection: 'row',
-//         alignItems: 'center',
-//         justifyContent: 'space-around',
-//         flex: 1,
-//         paddingHorizontal: 16,
-//         zIndex: 1,
-//       }}>
-//         {state.routes.map((route, index) => {
-//           const { options } = descriptors[route.key];
-//           const label = tabLabels[route.name] || route.name;
-//           const iconName = tabIcons[route.name] || 'meals';
-          
-//           const isFocused = state.index === index;
-
-//           const onPress = () => {
-//             const event = navigation.emit({
-//               type: 'tabPress',
-//               target: route.key,
-//               canPreventDefault: true,
-//             });
-
-//             if (!isFocused && !event.defaultPrevented) {
-//               navigation.navigate(route.name);
-//             }
-//           };
-
-//           return (
-//             <TouchableOpacity
-//               key={index}
-//               accessibilityRole="button"
-//               accessibilityState={isFocused ? { selected: true } : {}}
-//               accessibilityLabel={options.tabBarAccessibilityLabel}
-//               onPress={onPress}
-//               style={{
-//                 flex: 1,
-//                 alignItems: 'center',
-//                 justifyContent: 'center',
-//                 paddingVertical: 8,
-//                 borderRadius: 20,
-//                 backgroundColor: isFocused ? 'rgba(16, 185, 129, 0.08)' : 'transparent',
-//                 marginHorizontal: 2,
-//               }}
-//               activeOpacity={0.7}
-//             >
-//               <TabIcon 
-//                 name={iconName}
-//                 focused={isFocused}
-//                 size={22}
-//               />
-//               <Text style={{
-//                 fontSize: 11,
-//                 fontWeight: isFocused ? '700' : '600',
-//                 color: isFocused ? '#10b981' : '#94a3b8',
-//                 marginTop: 2,
-//                 letterSpacing: 0.1,
-//               }}>
-//                 {label}
-//               </Text>
-//             </TouchableOpacity>
-//           );
-//         })}
-//       </View>
-      
-//       {/* Bottom Accent Line */}
-//       <View style={{
-//         position: 'absolute',
-//         bottom: 8,
-//         left: '50%',
-//         transform: [{ translateX: -15 }],
-//         width: 30,
-//         height: 3,
-//         backgroundColor: '#10b981',
-//         borderRadius: 2,
-//         opacity: 0.6,
-//       }} />
-//     </View>
-//   );
-// };
-
-// // Stack for Meals tab
-// function MealStackNavigator() {
-//   return (
-//     <MealStack.Navigator screenOptions={{ headerShown: false }}>
-//       <MealStack.Screen name="MealsHome" component={MealPlanScreen} />
-//       <MealStack.Screen name="Subscription" component={SubscriptionScreen} />
-//       <MealStack.Screen name="Delivery" component={DeliveryScreen} />
-//       <MealStack.Screen name="Payment" component={PaymentScreen} />
-//       <MealStack.Screen name="ProfileInput" component={ProfileInputScreen} />
-//     </MealStack.Navigator>
-//   );
-// }
-
-// function TabNavigator() {
-//   return (
-//     <Tab.Navigator
-//       initialRouteName="Meals"
-//       screenOptions={{
-//         headerShown: false,
-//       }}
-//       tabBar={(props) => <FloatingTabBar {...props} />}
-//     >
-//       <Tab.Screen name="Meals" component={MealStackNavigator} />
-//       <Tab.Screen name="Subscriptions" component={SubscriptionScreen} />
-//       <Tab.Screen name="Deliveries" component={DeliveryScreen} />
-//       <Tab.Screen name="Profile" component={ProfileScreen} />
-//     </Tab.Navigator>
-//   );
-// }
-
-// export default TabNavigator;
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
@@ -343,9 +6,11 @@ import {
   Platform, 
   Dimensions, 
   TouchableOpacity, 
-  Text
+  Text,
+  StyleSheet
 } from 'react-native';
-import Svg, { Path, Circle, Defs, LinearGradient, Stop } from 'react-native-svg';
+import { LinearGradient } from 'expo-linear-gradient';
+import Svg, { Path, Circle, G } from 'react-native-svg';
 import MealPlanScreen from '../screens/MealPlanScreen';
 import SubscriptionScreen from '../screens/SubscriptionScreen';
 import DeliveryScreen from '../screens/DeliveryScreen';
@@ -357,8 +22,8 @@ const Tab = createBottomTabNavigator();
 const MealStack = createStackNavigator();
 const { width } = Dimensions.get('window');
 
-// Curved Tab Bar with Center Focus
-const CurvedTabBar = ({ state, descriptors, navigation }) => {
+// Enhanced Modern Tab Bar
+const ModernTabBar = ({ state, descriptors, navigation }) => {
   const tabData = [
     { name: 'Meals', icon: 'meals', label: 'Meals' },
     { name: 'Subscriptions', icon: 'plans', label: 'Plans' },
@@ -367,34 +32,53 @@ const CurvedTabBar = ({ state, descriptors, navigation }) => {
   ];
 
   const TabIcon = ({ name, focused }) => {
-    const color = focused ? '#ffffff' : '#10b981';
-    const size = focused ? 28 : 24;
+    const size = focused ? 26 : 24;
     
     const icons = {
       meals: (
         <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-          <Circle cx="12" cy="12" r="3" fill={color} />
-          <Path d="M19.4 15C19.2669 15.3016 19.2272 15.6362 19.286 15.9606" stroke={color} strokeWidth="2" strokeLinecap="round" />
-          <Path d="M4.6 9C4.73308 8.69838 4.77282 8.36381 4.714 8.03941" stroke={color} strokeWidth="2" strokeLinecap="round" />
+          <Path 
+            d="M12 2C10.3431 2 9 3.34315 9 5V8C9 8.55228 8.55228 9 8 9C7.44772 9 7 8.55228 7 8V3C7 2.44772 6.55228 2 6 2C5.44772 2 5 2.44772 5 3V8C5 9.65685 6.34315 11 8 11V21C8 21.5523 8.44772 22 9 22C9.55228 22 10 21.5523 10 21V11H11V21C11 21.5523 11.4477 22 12 22C12.5523 22 13 21.5523 13 21V11C14.6569 11 16 9.65685 16 8V3C16 2.44772 15.5523 2 15 2C14.4477 2 14 2.44772 14 3V8C14 8.55228 13.5523 9 13 9C12.4477 9 12 8.55228 12 8V5C12 3.34315 13.3431 2 15 2H16C17.1046 2 18 2.89543 18 4V8C18 10.2091 16.2091 12 14 12V21C14 21.5523 14.4477 22 15 22C15.5523 22 16 21.5523 16 21V12C18.2091 12 20 10.2091 20 8V4C20 2.89543 19.1046 2 18 2H15Z" 
+            fill={focused ? '#ffffff' : '#6b7280'}
+          />
         </Svg>
       ),
       plans: (
         <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-          <Path d="M3 7V19C3 20.1046 3.89543 21 5 21H19C20.1046 21 21 20.1046 21 19V7" stroke={color} strokeWidth="2.5" strokeLinecap="round" />
-          <Path d="M21 5L12 12L3 5" stroke={color} strokeWidth="2.5" strokeLinecap="round" />
+          <Path 
+            d="M9 2C7.89543 2 7 2.89543 7 4V6H5C3.89543 6 3 6.89543 3 8V20C3 21.1046 3.89543 22 5 22H19C20.1046 22 21 21.1046 21 20V8C21 6.89543 20.1046 6 19 6H17V4C17 2.89543 16.1046 2 15 2H9ZM9 4H15V8H9V4ZM5 8H7V10H9V8H15V10H17V8H19V20H5V8Z" 
+            fill={focused ? '#ffffff' : '#6b7280'}
+          />
+          <Path d="M8 13H10V15H8V13Z" fill={focused ? '#ff6b35' : '#6b7280'}/>
+          <Path d="M11 13H13V15H11V13Z" fill={focused ? '#ff6b35' : '#6b7280'}/>
+          <Path d="M14 13H16V15H14V13Z" fill={focused ? '#ff6b35' : '#6b7280'}/>
         </Svg>
       ),
       orders: (
         <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-          <Circle cx="7" cy="17" r="2" fill={focused ? color : 'none'} stroke={color} strokeWidth="2" />
-          <Circle cx="17" cy="17" r="2" fill={focused ? color : 'none'} stroke={color} strokeWidth="2" />
-          <Path d="M5 17H4C3.44772 17 3 16.5523 3 16V6" stroke={color} strokeWidth="2.5" strokeLinecap="round" />
+          <Path 
+            d="M7 4C6.44772 4 6 4.44772 6 5V6H4C3.44772 6 3 6.44772 3 7V19C3 19.5523 3.44772 20 4 20H6V21C6 21.5523 6.44772 22 7 22H17C17.5523 22 18 21.5523 18 21V20H20C20.5523 20 21 19.5523 21 19V7C21 6.44772 20.5523 6 20 6H18V5C18 4.44772 17.5523 4 17 4H7ZM8 6H16V18H8V6ZM5 8H6V18H5V8ZM18 8H19V18H18V8Z" 
+            fill={focused ? '#ffffff' : '#6b7280'}
+          />
+          <Circle cx="12" cy="12" r="2" fill={focused ? '#ffffff' : '#6b7280'}/>
         </Svg>
       ),
       profile: (
         <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-          <Circle cx="12" cy="6" r="4" fill={focused ? color : 'none'} stroke={color} strokeWidth="2.5" />
-          <Path d="M20 21V19C20 16.7909 18.2091 15 16 15H8C5.79086 15 4 16.7909 4 19V21" stroke={color} strokeWidth="2.5" strokeLinecap="round" />
+          <Circle 
+            cx="12" 
+            cy="8" 
+            r="4" 
+            fill={focused ? '#ffffff' : 'none'} 
+            stroke={focused ? '#ff6b35' : '#6b7280'} 
+            strokeWidth="2"
+          />
+          <Path 
+            d="M4 20C4 16.6863 6.68629 14 10 14H14C17.3137 14 20 16.6863 20 20V21C20 21.5523 19.5523 22 19 22H5C4.44772 22 4 21.5523 4 21V20Z" 
+            fill={focused ? '#ff6b35' : 'none'}
+            stroke={focused ? '#ff6b35' : '#6b7280'} 
+            strokeWidth="2"
+          />
         </Svg>
       )
     };
@@ -403,103 +87,154 @@ const CurvedTabBar = ({ state, descriptors, navigation }) => {
   };
 
   return (
-    <View style={{
-      position: 'absolute',
-      bottom: 0,
-      left: 0,
-      right: 0,
-      height: Platform.OS === 'ios' ? 90 : 70,
-      backgroundColor: '#ffffff',
-    }}>
-      {/* Curved Background */}
-      <Svg
-        width={width}
-        height={Platform.OS === 'ios' ? 90 : 70}
-        viewBox={`0 0 ${width} ${Platform.OS === 'ios' ? 90 : 70}`}
-        style={{ position: 'absolute', top: 0 }}
+    <View style={styles.tabBarContainer}>
+      {/* Gradient Background */}
+      <LinearGradient
+        colors={['#0a0e27', '#1a1f3a']}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 0 }}
+        style={styles.gradientBackground}
       >
-        <Defs>
-          <LinearGradient id="tabGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-            <Stop offset="0%" stopColor="#ffffff" />
-            <Stop offset="50%" stopColor="#f8fafc" />
-            <Stop offset="100%" stopColor="#ffffff" />
-          </LinearGradient>
-        </Defs>
-        <Path
-          d={`M 0 25 Q ${width / 2} 0 ${width} 25 L ${width} ${Platform.OS === 'ios' ? 90 : 70} L 0 ${Platform.OS === 'ios' ? 90 : 70} Z`}
-          fill="url(#tabGradient)"
-          stroke="#e5e7eb"
-          strokeWidth="1"
-        />
-      </Svg>
+        {/* Top Border Accent */}
+      
 
-      {/* Tab Items */}
-      <View style={{
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-around',
-        paddingTop: 15,
-        paddingBottom: Platform.OS === 'ios' ? 25 : 10,
-        paddingHorizontal: 20,
-        zIndex: 1,
-      }}>
-        {state.routes.map((route, index) => {
-          const isFocused = state.index === index;
-          const tabInfo = tabData[index];
+        {/* Tab Items */}
+        <View style={styles.tabItemsContainer}>
+          {state.routes.map((route, index) => {
+            const isFocused = state.index === index;
+            const tabInfo = tabData[index];
 
-          const onPress = () => {
-            const event = navigation.emit({
-              type: 'tabPress',
-              target: route.key,
-              canPreventDefault: true,
-            });
+            const onPress = () => {
+              const event = navigation.emit({
+                type: 'tabPress',
+                target: route.key,
+                canPreventDefault: true,
+              });
 
-            if (!isFocused && !event.defaultPrevented) {
-              navigation.navigate(route.name);
-            }
-          };
+              if (!isFocused && !event.defaultPrevented) {
+                navigation.navigate(route.name);
+              }
+            };
 
-          return (
-            <TouchableOpacity
-              key={index}
-              onPress={onPress}
-              style={{
-                alignItems: 'center',
-                justifyContent: 'center',
-                width: 60,
-                height: 60,
-                borderRadius: 30,
-                backgroundColor: isFocused ? '#10b981' : 'transparent',
-                shadowColor: isFocused ? '#10b981' : 'transparent',
-                shadowOffset: {
-                  width: 0,
-                  height: 6,
-                },
-                shadowOpacity: 0.3,
-                shadowRadius: 12,
-                elevation: isFocused ? 8 : 0,
-              }}
-              activeOpacity={0.8}
-            >
-              <TabIcon name={tabInfo.icon} focused={isFocused} />
-              {!isFocused && (
-                <Text style={{
-                  fontSize: 10,
-                  fontWeight: '600',
-                  color: '#10b981',
-                  marginTop: 2,
-                  letterSpacing: 0.1,
-                }}>
-                  {tabInfo.label}
-                </Text>
-              )}
-            </TouchableOpacity>
-          );
-        })}
-      </View>
+            return (
+              <TouchableOpacity
+                key={index}
+                onPress={onPress}
+                style={styles.tabItem}
+                activeOpacity={0.7}
+              >
+                {isFocused ? (
+                  <LinearGradient
+                    colors={['#ff6b35', '#f7931e']}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 0 }}
+                    style={styles.activeTabBackground}
+                  >
+                    <View style={styles.activeTabContent}>
+                      <TabIcon name={tabInfo.icon} focused={isFocused} />
+                      <Text style={styles.activeTabLabel}>{tabInfo.label}</Text>
+                    </View>
+                  </LinearGradient>
+                ) : (
+                  <View style={styles.inactiveTabContent}>
+                    <TabIcon name={tabInfo.icon} focused={isFocused} />
+                    <Text style={styles.inactiveTabLabel}>{tabInfo.label}</Text>
+                  </View>
+                )}
+              </TouchableOpacity>
+            );
+          })}
+        </View>
+      </LinearGradient>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  tabBarContainer: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    height: Platform.OS === 'ios' ? 90 : 90,
+    backgroundColor: 'transparent',
+  },
+  gradientBackground: {
+    flex: 1,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: -4,
+    },
+    shadowOpacity: 0.4,
+    shadowRadius: 16,
+    elevation: 24,
+  },
+  topAccent: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    height: 2,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+  },
+  tabItemsContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+    paddingTop: 8,
+    paddingBottom: Platform.OS === 'ios' ? 24 : 12,
+    paddingHorizontal: 12,
+  },
+  tabItem: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    flex: 1,
+    minHeight: 50,
+  },
+  activeTabBackground: {
+    paddingVertical: 10,
+    paddingHorizontal: 14,
+    borderRadius: 14,
+    shadowColor: '#ff6b35',
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.5,
+    shadowRadius: 6,
+    elevation: 8,
+    minWidth: 70,
+    alignItems: 'center',
+  },
+  activeTabContent: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  activeTabLabel: {
+    fontSize: 10,
+    fontWeight: '800',
+    color: '#ffffff',
+    marginTop: 3,
+    letterSpacing: 0.5,
+    textTransform: 'uppercase',
+  },
+  inactiveTabContent: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 10,
+  },
+  inactiveTabLabel: {
+    fontSize: 9,
+    fontWeight: '600',
+    color: '#6b7280',
+    marginTop: 3,
+    letterSpacing: 0.3,
+  },
+});
 
 // Stack Navigator
 function MealStackNavigator() {
@@ -518,8 +253,10 @@ function TabNavigator() {
   return (
     <Tab.Navigator
       initialRouteName="Meals"
-      screenOptions={{ headerShown: false }}
-      tabBar={(props) => <CurvedTabBar {...props} />}
+      screenOptions={{ 
+        headerShown: false,
+      }}
+      tabBar={(props) => <ModernTabBar {...props} />}
     >
       <Tab.Screen name="Meals" component={MealStackNavigator} />
       <Tab.Screen name="Subscriptions" component={SubscriptionScreen} />

@@ -7,19 +7,21 @@ import {
   SafeAreaView,
   StatusBar,
   Dimensions,
+  Platform,
 } from 'react-native';
-import Svg, { Path, Circle, Check } from 'react-native-svg';
+import { LinearGradient } from 'expo-linear-gradient';
+import Svg, { Path, Circle } from 'react-native-svg';
 
 const { width } = Dimensions.get('window');
 
-// Professional Icons
+// Enhanced Icons
 const CheckIcon = ({ size = 20, color = "#10b981" }) => (
   <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
     <Circle cx="12" cy="12" r="10" fill={color} />
     <Path
       d="M9 12L11 14L15 10"
       stroke="white"
-      strokeWidth="2"
+      strokeWidth="2.5"
       strokeLinecap="round"
       strokeLinejoin="round"
     />
@@ -43,11 +45,12 @@ const CrownIcon = ({ size = 24, color = "#fbbf24" }) => (
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
+      fill="none"
     />
   </Svg>
 );
 
-const ArrowLeftIcon = ({ size = 24, color = "#6b7280" }) => (
+const ArrowLeftIcon = ({ size = 24, color = "#ffffff" }) => (
   <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
     <Path
       d="M19 12H5M12 19L5 12L12 5"
@@ -59,7 +62,7 @@ const ArrowLeftIcon = ({ size = 24, color = "#6b7280" }) => (
   </Svg>
 );
 
-const LockIcon = ({ size = 20, color = "#6b7280" }) => (
+const LockIcon = ({ size = 20, color = "#9ca3af" }) => (
   <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
     <Path
       d="M19 11H5C3.89543 11 3 11.8954 3 13V20C3 21.1046 3.89543 22 5 22H19C20.1046 22 21 21.1046 21 20V13C21 11.8954 20.1046 11 19 11Z"
@@ -78,9 +81,24 @@ const LockIcon = ({ size = 20, color = "#6b7280" }) => (
   </Svg>
 );
 
+const FireIcon = ({ size = 24, color = "#ff6b35" }) => (
+  <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+    <Path
+      d="M13.5.67s.74 2.65.74 4.8c0 2.06-1.35 3.73-3.41 3.73-2.07 0-3.63-1.67-3.63-3.73l.03-.36C5.21 7.51 4 10.62 4 14c0 4.42 3.58 8 8 8s8-3.58 8-8C20 8.61 17.41 3.8 13.5.67zM11.71 19c-1.78 0-3.22-1.4-3.22-3.14 0-1.62 1.05-2.76 2.81-3.12 1.77-.36 3.6-1.21 4.62-2.58.39 1.29.59 2.65.59 4.04 0 2.65-2.15 4.8-4.8 4.8z"
+      fill={color}
+    />
+  </Svg>
+);
+
+const LightningIcon = ({ size = 24, color = "#ffd93d" }) => (
+  <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+    <Path d="M7 2v11h3v9l7-12h-4l4-8z" fill={color} />
+  </Svg>
+);
+
 const SubscriptionScreen = ({ navigation }) => {
   const [selectedPlan, setSelectedPlan] = useState('pro');
-  const [billingCycle, setBillingCycle] = useState('monthly'); // 'monthly' or 'yearly'
+  const [billingCycle, setBillingCycle] = useState('monthly');
 
   const subscriptionPlans = {
     basic: {
@@ -95,7 +113,7 @@ const SubscriptionScreen = ({ navigation }) => {
         'Email support',
         'Mobile app access'
       ],
-      color: 'gray',
+      gradient: ['#6b7280', '#9ca3af'],
       popular: false
     },
     pro: {
@@ -112,7 +130,7 @@ const SubscriptionScreen = ({ navigation }) => {
         'Macro tracking',
         'Shopping lists'
       ],
-      color: 'emerald',
+      gradient: ['#ff6b35', '#f7931e'],
       popular: true
     },
     premium: {
@@ -129,7 +147,7 @@ const SubscriptionScreen = ({ navigation }) => {
         'Supplement recommendations',
         'VIP support'
       ],
-      color: 'amber',
+      gradient: ['#fbbf24', '#f59e0b'],
       popular: false
     }
   };
@@ -149,156 +167,261 @@ const SubscriptionScreen = ({ navigation }) => {
     return (
       <TouchableOpacity
         onPress={() => setSelectedPlan(planKey)}
-        className={`rounded-3xl p-6 mb-4 border-2 ${
-          isSelected 
-            ? plan.color === 'emerald' 
-              ? 'border-emerald-500 bg-emerald-50' 
-              : plan.color === 'amber'
-                ? 'border-amber-500 bg-amber-50'
-                : 'border-gray-500 bg-gray-50'
-            : 'border-gray-200 bg-white'
-        }`}
+        activeOpacity={0.8}
+        className="mb-4"
       >
-        {plan.popular && (
-          <View className="absolute -top-3 left-6 right-6 items-center">
-            <View className="bg-emerald-500 px-4 py-2 rounded-full flex-row items-center">
-              <StarIcon size={14} color="white" />
-              <Text className="text-white font-semibold text-xs ml-1">MOST POPULAR</Text>
-            </View>
-          </View>
-        )}
+        <View className={`rounded-3xl overflow-hidden ${isSelected ? 'shadow-2xl' : ''}`}>
+          {isSelected ? (
+            <LinearGradient
+              colors={plan.gradient}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 1 }}
+              style={{ padding: 3, borderRadius: 24 }}
+            >
+              <View className="bg-gradient-to-br from-slate-900 to-slate-800 rounded-3xl p-6">
+                {plan.popular && (
+                  <View className="absolute -top-1 right-6 z-10">
+                    <LinearGradient
+                      colors={['#10b981', '#059669']}
+                      start={{ x: 0, y: 0 }}
+                      end={{ x: 1, y: 0 }}
+                      style={{
+                        paddingVertical: 6,
+                        paddingHorizontal: 12,
+                        borderRadius: 12,
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                      }}
+                    >
+                      <StarIcon size={12} color="white" />
+                      <Text className="text-white font-black text-xs ml-1 tracking-wide">POPULAR</Text>
+                    </LinearGradient>
+                  </View>
+                )}
 
-        <View className="flex-row justify-between items-start mb-4">
-          <View className="flex-1">
-            <View className="flex-row items-center mb-2">
-              <Text className={`text-xl font-bold ${
-                isSelected 
-                  ? plan.color === 'emerald' 
-                    ? 'text-emerald-600' 
-                    : plan.color === 'amber'
-                      ? 'text-amber-600'
-                      : 'text-gray-600'
-                  : 'text-gray-900'
-              }`}>
-                {plan.name}
-              </Text>
-              {plan.name === 'Premium' && (
-                <View className="ml-2">
-                  <CrownIcon size={20} color="#fbbf24" />
+                <View className="flex-row justify-between items-start mb-5">
+                  <View className="flex-1">
+                    <View className="flex-row items-center mb-2">
+                      <Text className="text-2xl font-black text-white">
+                        {plan.name}
+                      </Text>
+                      {plan.name === 'Premium' && (
+                        <View className="ml-2">
+                          <CrownIcon size={22} color="#fbbf24" />
+                        </View>
+                      )}
+                    </View>
+                    <Text className="text-gray-300 text-sm font-semibold">{plan.description}</Text>
+                  </View>
+
+                  <View className="items-end">
+                    <View className="flex-row items-baseline">
+                      <Text className="text-3xl font-black text-white">
+                        ${price.toFixed(2)}
+                      </Text>
+                      <Text className="text-gray-400 text-sm font-bold">/mo</Text>
+                    </View>
+                    {billingCycle === 'yearly' && (
+                      <View className="bg-green-500/20 border border-green-500/40 px-2 py-1 rounded-full mt-1">
+                        <Text className="text-green-300 text-xs font-black">
+                          Save {savings.percentage}%
+                        </Text>
+                      </View>
+                    )}
+                  </View>
+                </View>
+
+                <View className="space-y-3">
+                  {plan.features.map((feature, index) => (
+                    <View key={index} className="flex-row items-center mb-3">
+                      <LinearGradient
+                        colors={plan.gradient}
+                        start={{ x: 0, y: 0 }}
+                        end={{ x: 1, y: 0 }}
+                        style={{ width: 20, height: 20, borderRadius: 10, alignItems: 'center', justifyContent: 'center' }}
+                      >
+                        <Text className="text-white font-bold text-xs">✓</Text>
+                      </LinearGradient>
+                      <Text className="text-gray-200 text-sm ml-3 flex-1 font-semibold">{feature}</Text>
+                    </View>
+                  ))}
+                </View>
+              </View>
+            </LinearGradient>
+          ) : (
+            <View className="bg-white/10 border-2 border-white/20 rounded-3xl p-6">
+              {plan.popular && (
+                <View className="absolute -top-2 right-6">
+                  <View className="bg-green-500/20 border border-green-500/40 px-3 py-1.5 rounded-full flex-row items-center">
+                    <StarIcon size={12} color="#10b981" />
+                    <Text className="text-green-400 font-bold text-xs ml-1">POPULAR</Text>
+                  </View>
                 </View>
               )}
-            </View>
-            <Text className="text-gray-600 text-sm">{plan.description}</Text>
-          </View>
 
-          <View className="items-end">
-            <View className="flex-row items-baseline">
-              <Text className={`text-2xl font-bold ${
-                isSelected 
-                  ? plan.color === 'emerald' 
-                    ? 'text-emerald-600' 
-                    : plan.color === 'amber'
-                      ? 'text-amber-600'
-                      : 'text-gray-600'
-                  : 'text-gray-900'
-              }`}>
-                ${price.toFixed(2)}
-              </Text>
-              <Text className="text-gray-500 text-sm">/mo</Text>
-            </View>
-            {billingCycle === 'yearly' && (
-              <View className="bg-green-100 px-2 py-1 rounded-full mt-1">
-                <Text className="text-green-700 text-xs font-medium">
-                  Save {savings.percentage}%
-                </Text>
+              <View className="flex-row justify-between items-start mb-5">
+                <View className="flex-1">
+                  <View className="flex-row items-center mb-2">
+                    <Text className="text-xl font-bold text-white">
+                      {plan.name}
+                    </Text>
+                    {plan.name === 'Premium' && (
+                      <View className="ml-2">
+                        <CrownIcon size={20} color="#6b7280" />
+                      </View>
+                    )}
+                  </View>
+                  <Text className="text-gray-400 text-sm">{plan.description}</Text>
+                </View>
+
+                <View className="items-end">
+                  <View className="flex-row items-baseline">
+                    <Text className="text-2xl font-bold text-white">
+                      ${price.toFixed(2)}
+                    </Text>
+                    <Text className="text-gray-500 text-sm">/mo</Text>
+                  </View>
+                  {billingCycle === 'yearly' && (
+                    <View className="bg-green-500/10 px-2 py-1 rounded-full mt-1">
+                      <Text className="text-green-400 text-xs font-semibold">
+                        Save {savings.percentage}%
+                      </Text>
+                    </View>
+                  )}
+                </View>
               </View>
-            )}
-          </View>
-        </View>
 
-        <View className="space-y-3">
-          {plan.features.map((feature, index) => (
-            <View key={index} className="flex-row items-center">
-              <CheckIcon size={16} color={
-                isSelected 
-                  ? plan.color === 'emerald' 
-                    ? '#10b981' 
-                    : plan.color === 'amber'
-                      ? '#f59e0b'
-                      : '#6b7280'
-                  : '#10b981'
-              } />
-              <Text className="text-gray-700 text-sm ml-3 flex-1">{feature}</Text>
+              <View className="space-y-3">
+                {plan.features.map((feature, index) => (
+                  <View key={index} className="flex-row items-center mb-2">
+                    <CheckIcon size={16} color="#6b7280" />
+                    <Text className="text-gray-300 text-sm ml-3 flex-1">{feature}</Text>
+                  </View>
+                ))}
+              </View>
             </View>
-          ))}
+          )}
         </View>
       </TouchableOpacity>
     );
   };
 
   const BillingToggle = () => (
-    <View className="bg-white rounded-2xl p-2 mb-6 flex-row shadow-sm border border-gray-100">
+    <View className="bg-white/10 border border-white/20 rounded-2xl p-1.5 mb-6 flex-row">
       <TouchableOpacity
         onPress={() => setBillingCycle('monthly')}
-        className={`flex-1 py-3 rounded-xl items-center ${
-          billingCycle === 'monthly' ? 'bg-emerald-500' : 'bg-transparent'
-        }`}
+        className="flex-1"
+        activeOpacity={0.8}
       >
-        <Text className={`font-medium ${
-          billingCycle === 'monthly' ? 'text-white' : 'text-gray-600'
-        }`}>
-          Monthly
-        </Text>
+        {billingCycle === 'monthly' ? (
+          <LinearGradient
+            colors={['#ff6b35', '#f7931e']}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 0 }}
+            style={{
+              paddingVertical: 12,
+              borderRadius: 14,
+              alignItems: 'center',
+            }}
+          >
+            <Text className="font-black text-white tracking-wide">
+              MONTHLY
+            </Text>
+          </LinearGradient>
+        ) : (
+          <View className="py-3 items-center">
+            <Text className="font-semibold text-gray-400">Monthly</Text>
+          </View>
+        )}
       </TouchableOpacity>
       
       <TouchableOpacity
         onPress={() => setBillingCycle('yearly')}
-        className={`flex-1 py-3 rounded-xl items-center ${
-          billingCycle === 'yearly' ? 'bg-emerald-500' : 'bg-transparent'
-        }`}
+        className="flex-1"
+        activeOpacity={0.8}
       >
-        <View className="items-center">
-          <Text className={`font-medium ${
-            billingCycle === 'yearly' ? 'text-white' : 'text-gray-600'
-          }`}>
-            Yearly
-          </Text>
-          <Text className={`text-xs ${
-            billingCycle === 'yearly' ? 'text-emerald-100' : 'text-emerald-600'
-          }`}>
-            Save up to 20%
-          </Text>
-        </View>
+        {billingCycle === 'yearly' ? (
+          <LinearGradient
+            colors={['#ff6b35', '#f7931e']}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 0 }}
+            style={{
+              paddingVertical: 12,
+              borderRadius: 14,
+              alignItems: 'center',
+            }}
+          >
+            <Text className="font-black text-white tracking-wide">
+              YEARLY
+            </Text>
+            <Text className="text-white/80 text-xs font-bold mt-0.5">
+              Save up to 20%
+            </Text>
+          </LinearGradient>
+        ) : (
+          <View className="py-3 items-center">
+            <Text className="font-semibold text-gray-400">Yearly</Text>
+            <Text className="text-orange-400 text-xs font-semibold mt-0.5">
+              Save up to 20%
+            </Text>
+          </View>
+        )}
       </TouchableOpacity>
     </View>
   );
 
   const FeatureComparison = () => (
-    <View className="bg-white rounded-3xl p-6 mb-6 shadow-sm border border-gray-100">
-      <Text className="text-lg font-semibold text-gray-900 mb-4">Why choose Pro?</Text>
+    <View className="bg-white/10 backdrop-blur-xl rounded-3xl p-6 mb-6 border border-white/20">
+      <View className="flex-row items-center mb-5">
+        <View className="w-10 h-10 bg-gradient-to-br from-orange-500 to-pink-600 rounded-xl mr-3 items-center justify-center">
+          <FireIcon size={20} color="#ffffff" />
+        </View>
+        <Text className="text-white text-lg font-black tracking-wide">WHY CHOOSE PRO?</Text>
+      </View>
       
       <View className="space-y-4">
-        <View className="flex-row items-start">
-          <CheckIcon size={20} color="#10b981" />
+        <View className="flex-row items-start mb-4">
+          <LinearGradient
+            colors={['#ff6b35', '#f7931e']}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 0 }}
+            style={{ width: 24, height: 24, borderRadius: 12, alignItems: 'center', justifyContent: 'center', marginTop: 2 }}
+          >
+            <Text className="text-white font-bold">✓</Text>
+          </LinearGradient>
           <View className="ml-3 flex-1">
-            <Text className="font-medium text-gray-900 mb-1">Unlimited Meal Plans</Text>
-            <Text className="text-gray-600 text-sm">Create and save unlimited personalized meal plans for any goal</Text>
+            <Text className="font-bold text-white mb-1">Unlimited Meal Plans</Text>
+            <Text className="text-gray-300 text-sm">Create and save unlimited personalized meal plans for any goal</Text>
+          </View>
+        </View>
+        
+        <View className="flex-row items-start mb-4">
+          <LinearGradient
+            colors={['#ff6b35', '#f7931e']}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 0 }}
+            style={{ width: 24, height: 24, borderRadius: 12, alignItems: 'center', justifyContent: 'center', marginTop: 2 }}
+          >
+            <Text className="text-white font-bold">✓</Text>
+          </LinearGradient>
+          <View className="ml-3 flex-1">
+            <Text className="font-bold text-white mb-1">Advanced Analytics</Text>
+            <Text className="text-gray-300 text-sm">Detailed nutrition insights and progress tracking</Text>
           </View>
         </View>
         
         <View className="flex-row items-start">
-          <CheckIcon size={20} color="#10b981" />
+          <LinearGradient
+            colors={['#ff6b35', '#f7931e']}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 0 }}
+            style={{ width: 24, height: 24, borderRadius: 12, alignItems: 'center', justifyContent: 'center', marginTop: 2 }}
+          >
+            <Text className="text-white font-bold">✓</Text>
+          </LinearGradient>
           <View className="ml-3 flex-1">
-            <Text className="font-medium text-gray-900 mb-1">Advanced Analytics</Text>
-            <Text className="text-gray-600 text-sm">Detailed nutrition insights and progress tracking</Text>
-          </View>
-        </View>
-        
-        <View className="flex-row items-start">
-          <CheckIcon size={20} color="#10b981" />
-          <View className="ml-3 flex-1">
-            <Text className="font-medium text-gray-900 mb-1">Workout Integration</Text>
-            <Text className="text-gray-600 text-sm">Sync with fitness apps and adjust nutrition based on workouts</Text>
+            <Text className="font-bold text-white mb-1">Workout Integration</Text>
+            <Text className="text-gray-300 text-sm">Sync with fitness apps and adjust nutrition based on workouts</Text>
           </View>
         </View>
       </View>
@@ -306,29 +429,40 @@ const SubscriptionScreen = ({ navigation }) => {
   );
 
   const SecurityBadge = () => (
-    <View className="flex-row items-center justify-center mb-6">
-      <LockIcon size={16} color="#6b7280" />
-      <Text className="text-gray-600 text-sm ml-2">Secure payment • Cancel anytime • 30-day guarantee</Text>
+    <View className="flex-row items-center justify-center mb-6 flex-wrap px-4">
+      <LockIcon size={16} color="#9ca3af" />
+      <Text className="text-gray-400 text-xs ml-2 text-center">
+        Secure payment • Cancel anytime • 30-day guarantee
+      </Text>
     </View>
   );
 
   return (
-    <View className="flex-1 bg-gray-50">
-      <SafeAreaView className="flex-1">
-        <StatusBar barStyle="dark-content" backgroundColor="#f9fafb" />
+    <LinearGradient
+      colors={['#0a0e27', '#1a1f3a', '#2d1b4e']}
+      locations={[0, 0.5, 1]}
+      style={{ flex: 1 }}
+    >
+      <StatusBar barStyle="light-content" backgroundColor="transparent" translucent />
+      <SafeAreaView style={{ flex: 1, paddingTop: StatusBar.currentHeight || 0 }}>
         
         {/* Header */}
-        <View className="bg-white px-6 py-4 border-b border-gray-100">
+        <View className="px-6 pt-4 pb-4">
           <View className="flex-row items-center">
             <TouchableOpacity 
               onPress={() => navigation?.goBack()}
-              className="bg-gray-50 p-2 rounded-xl mr-4"
+              className="bg-white/10 border border-white/20 p-3 rounded-xl mr-4"
+              activeOpacity={0.7}
             >
-              <ArrowLeftIcon size={20} color="#6b7280" />
+              <ArrowLeftIcon size={20} color="#ffffff" />
             </TouchableOpacity>
             <View className="flex-1">
-              <Text className="text-2xl font-bold text-gray-900">Choose Your Plan</Text>
-              <Text className="text-gray-500 text-sm">Unlock your full nutrition potential</Text>
+              <Text className="text-2xl font-black text-white tracking-tight">CHOOSE PLAN</Text>
+              <View className="flex-row items-center mt-1">
+                <View className="w-6 h-1 bg-orange-500 rounded-full mr-1" />
+                <LightningIcon size={10} color="#ffd93d" />
+                <View className="w-6 h-1 bg-orange-500 rounded-full ml-1" />
+              </View>
             </View>
           </View>
         </View>
@@ -336,14 +470,15 @@ const SubscriptionScreen = ({ navigation }) => {
         <ScrollView 
           showsVerticalScrollIndicator={false} 
           className="flex-1 px-6"
+          contentContainerStyle={{ paddingBottom: Platform.OS === 'ios' ? 100 : 80 }}
         >
           {/* Hero Section */}
           <View className="py-6">
-            <Text className="text-3xl font-bold text-center text-gray-900 mb-3">
-              Start Your Transformation
+            <Text className="text-3xl font-black text-center text-white mb-3 tracking-tight">
+              START YOUR{'\n'}TRANSFORMATION 🔥
             </Text>
-            <Text className="text-center text-gray-600 text-base leading-6">
-              Join thousands of users who've achieved their fitness goals with personalized nutrition plans
+            <Text className="text-center text-gray-300 text-base leading-6 font-semibold">
+              Join thousands who&apos;ve achieved their fitness goals with personalized nutrition
             </Text>
           </View>
 
@@ -359,35 +494,50 @@ const SubscriptionScreen = ({ navigation }) => {
           <FeatureComparison />
 
           {/* Testimonial */}
-          <View className="bg-emerald-50 rounded-3xl p-6 mb-6 border border-emerald-100">
+          <View className="bg-gradient-to-br from-green-500/20 to-emerald-600/20 border-2 border-green-500/30 rounded-3xl p-6 mb-6">
             <View className="flex-row items-center mb-3">
               {[1,2,3,4,5].map(i => (
                 <StarIcon key={i} size={16} color="#fbbf24" />
               ))}
-              <Text className="text-emerald-700 font-medium ml-2">4.9/5</Text>
+              <Text className="text-green-400 font-black ml-2 tracking-wide">4.9/5</Text>
             </View>
-            <Text className="text-gray-700 text-base mb-3 italic">
-              "GymMeal transformed my nutrition game. The personalized plans and tracking made reaching my fitness goals so much easier!"
+            <Text className="text-gray-200 text-base mb-3 italic font-semibold">
+              &apos;FitLife transformed my nutrition game. The personalized plans and tracking made reaching my fitness goals so much easier!&apos;
             </Text>
-            <Text className="text-emerald-700 font-medium">- Sarah M., Pro Member</Text>
+            <Text className="text-green-400 font-bold">- Sarah M., Pro Member</Text>
           </View>
 
           <SecurityBadge />
 
           {/* Subscribe Button */}
           <TouchableOpacity 
-            className="bg-emerald-500 rounded-2xl p-5 items-center mb-4 shadow-sm"
             activeOpacity={0.8}
+            className="mb-4 overflow-hidden rounded-2xl"
           >
-            <Text className="text-white font-semibold text-lg">
-              Start {subscriptionPlans[selectedPlan].name} Plan
-            </Text>
-            <Text className="text-emerald-100 text-sm mt-1">
-              {billingCycle === 'monthly' 
-                ? `$${subscriptionPlans[selectedPlan].monthlyPrice}/month`
-                : `$${subscriptionPlans[selectedPlan].yearlyPrice}/year`
-              }
-            </Text>
+            <LinearGradient
+              colors={['#ff6b35', '#f7931e']}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 0 }}
+              style={{
+                padding: 20,
+                alignItems: 'center',
+                shadowColor: '#ff6b35',
+                shadowOffset: { width: 0, height: 6 },
+                shadowOpacity: 0.4,
+                shadowRadius: 12,
+                elevation: 8,
+              }}
+            >
+              <Text className="text-white font-black text-lg tracking-wide">
+                START {subscriptionPlans[selectedPlan].name.toUpperCase()} PLAN →
+              </Text>
+              <Text className="text-white/80 text-sm mt-1 font-bold">
+                {billingCycle === 'monthly' 
+                  ? `$${subscriptionPlans[selectedPlan].monthlyPrice}/month`
+                  : `$${subscriptionPlans[selectedPlan].yearlyPrice}/year`
+                }
+              </Text>
+            </LinearGradient>
           </TouchableOpacity>
 
           {/* Terms */}
@@ -397,7 +547,7 @@ const SubscriptionScreen = ({ navigation }) => {
           </Text>
         </ScrollView>
       </SafeAreaView>
-    </View>
+    </LinearGradient>
   );
 };
 
